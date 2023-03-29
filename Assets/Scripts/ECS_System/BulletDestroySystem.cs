@@ -55,6 +55,7 @@ public class BulletDestroySystem : SystemBase
         EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
         Entities
+            .WithName("Bullet_Destroy")
             .WithAll<BulletTag>()
             .WithBurst()
             .ForEach((Entity entity, in Translation translation) =>

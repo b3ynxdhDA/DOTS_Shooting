@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 
 /// <summary>
-/// 弾を生成するシステム
+/// 回転する弾を生成するシステム
 /// </summary>
 [AlwaysUpdateSystem]
 public class SpinShootSystem : SystemBase
@@ -17,6 +17,7 @@ public class SpinShootSystem : SystemBase
         float deltaTime = Time.DeltaTime;
 
         Entities
+            .WithName("Spin_Shoot")
             .WithAll<SpinGunPortTag>()
             .ForEach((ref Rotation rotation, in SpinGunPortTag spinGunPortTag) =>
             {
