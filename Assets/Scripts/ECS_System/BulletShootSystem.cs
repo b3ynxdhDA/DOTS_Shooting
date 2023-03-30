@@ -47,7 +47,7 @@ public class BulletShootSystem : SystemBase
                 .ForEach((in GunPortTag gunporttag, in LocalToWorld localToWorld) =>
                 {
                     // PrefabとなるEntityから弾を複製する
-                    Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._prefabEntity);
+                    Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
 
                     // 位置の初期化
                     comandBuffer.SetComponent(instantiateEntity, new Translation
@@ -60,6 +60,7 @@ public class BulletShootSystem : SystemBase
                     {
                         Value = localToWorld.Rotation
                     });
+                    
 
                 }).Run();// メインスレッドで実行
 
@@ -78,7 +79,7 @@ public class BulletShootSystem : SystemBase
                     float3 direction = math.normalizesafe(aimTargetLocalToWorld.Position - localToWorld.Position);
 
                     // PrefabとなるEntityから弾を複製する
-                    Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._prefabEntity);
+                    Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
 
                     // 位置の初期化
                     comandBuffer.SetComponent(instantiateEntity, new Translation

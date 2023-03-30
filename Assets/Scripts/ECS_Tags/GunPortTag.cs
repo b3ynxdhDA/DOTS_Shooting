@@ -7,5 +7,20 @@ using Unity.Entities;
 public struct GunPortTag : IComponentData
 {
     // 発射する弾のエンティティ
-    public Entity _prefabEntity;
+    public Entity _straightBulletEntity;
+
+    // 発射する弾のエンティティ
+    public Entity _aimBulletEntity;
+
+    // 何列で弾を発射するか
+    public int _gunPortAmount;
+
+    public enum BulletKind
+    {
+        Straight,
+        Diffusion,
+        Aim
+    }
+
+    public BulletKind bulletKind;
 }
