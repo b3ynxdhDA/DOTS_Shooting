@@ -19,6 +19,14 @@ public class BulletShootSystem : SystemBase
     // 射撃の間隔
     const float _SHOOT_INTERVAL = 0.15f;
 
+    // 射撃する列の間隔
+    const float _SHOOT_SPACE = 0.5f;
+
+    // 射撃する角度の間隔
+    const float _SHOOT_RAD = 1.5f;
+    // 円周率
+    const float _PI = math.PI;
+
     /// <summary>
     /// システム作成時に呼ばれる処理
     /// </summary>
@@ -40,28 +48,69 @@ public class BulletShootSystem : SystemBase
         if(_shootCoolTime > _SHOOT_INTERVAL)
         {
             Entities
-                .WithName("Bullet_Shoot")
-                .WithAll<GunPortTag>()
-                .WithNone<AimGunPortTag>()
+                .WithName("Straight_Shoot")
+                .WithAll<GunPortTag, StraightGunPortTag>()
                 .WithoutBurst()
-                .ForEach((in GunPortTag gunporttag, in LocalToWorld localToWorld) =>
+                .ForEach((in GunPortTag gunporttag, in StraightGunPortTag straightTag, in LocalToWorld localToWorld) =>
                 {
-                    // PrefabとなるEntityから弾を複製する
-                    Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
-
-                    // 位置の初期化
-                    comandBuffer.SetComponent(instantiateEntity, new Translation
+                    for (int i = 0; i < straightTag._lines; i++)
                     {
-                        Value = localToWorld.Position
-                    });
+                        // PrefabとなるEntityから弾を複製する
+                        Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
 
-                    // 弾の向きを初期化
-                    comandBuffer.SetComponent(instantiateEntity, new Rotation
+                        // 発射の列ごとの位置を計算する
+                        float3 pos = new float3(localToWorld.Position.x + i - _SHOOT_SPACE * straightTag._lines + _SHOOT_SPACE, localToWorld.Position.y, 0f);
+                        
+                        // 位置の初期化
+                        comandBuffer.SetComponent(instantiateEntity, new Translation
+                        {
+                            Value = pos
+                        });
+
+                        // 弾の向きを初期化
+                        comandBuffer.SetComponent(instantiateEntity, new Rotation
+                        {
+                            Value = localToWorld.Rotation
+                        });
+
+                    }
+                }).Run();// メインスレッドで実行
+
+            Entities
+                .WithName("Wide_Shoot")
+                .WithAll<GunPortTag, WideGunPortTag>()
+                .WithoutBurst()
+                .ForEach((in GunPortTag gunporttag, in WideGunPortTag WideTag, in LocalToWorld localToWorld) =>
+                {
+                    for (int i = 0; i < WideTag._lines; i++)
                     {
-                        Value = localToWorld.Rotation
-                    });
-                    
+                        // PrefabとなるEntityから弾を複製する
+                        Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
 
+                        // 発射地点のローカル座標
+                        float3 localPos = localToWorld.Position;
+
+                        // 発射角度     弧度法:(_PI / 12) = 度数法:15度、弧度法:(_PI / 24) = 度数法:7.5度
+                        float angle = i * (_PI / 12) - WideTag._lines * (_PI / 24) + (_PI / 24);
+
+                        // 発射角を求めるための座標
+                        float3 position = new float3(localPos.x + _SHOOT_RAD * math.cos(angle), localPos.y + _SHOOT_RAD * math.sin(angle), localPos.z);
+                        // 発射源からみた座標の向き
+                        float3 diff = math.normalizesafe(position - localToWorld.Position);
+
+                        // 位置の初期化
+                        comandBuffer.SetComponent(instantiateEntity, new Translation
+                        {
+                            Value = localPos
+                        });
+
+                        // 弾の向きを初期化
+                        comandBuffer.SetComponent(instantiateEntity, new Rotation
+                        {
+                            Value = quaternion.LookRotationSafe(diff, math.up())
+                        });
+
+                    }
                 }).Run();// メインスレッドで実行
 
             Entities

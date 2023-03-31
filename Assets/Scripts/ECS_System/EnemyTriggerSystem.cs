@@ -69,6 +69,7 @@ public class EnemyTriggerSystem : SystemBase
             Entity entityA = triggerEvent.EntityA;
             Entity entityB = triggerEvent.EntityB;
 
+            float hitdamage = 1f;
             // “G“¯m‚ªÚG‚µ‚½ê‡
             if(EnemyEntity.HasComponent(entityA) && EnemyEntity.HasComponent(entityB))
             {
@@ -80,6 +81,10 @@ public class EnemyTriggerSystem : SystemBase
             {
                 entityCommandBuffer.DestroyEntity(entityA);
                 entityCommandBuffer.DestroyEntity(entityB);
+                entityCommandBuffer.SetComponent(entityA, new EnemyTag
+                {
+                    _enemyHp = EnemyEntity[entityA]._enemyHp - hitdamage
+                });
             }
             else if (PlayerBulletsEntity.HasComponent(entityA) && EnemyEntity.HasComponent(entityB))
             {

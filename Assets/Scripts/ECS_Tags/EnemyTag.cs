@@ -7,5 +7,6 @@ using Unity.Entities;
 public struct EnemyTag : IComponentData
 {
     // 動くスピード
-    public float _enemyMoveSpeed;
+    public float _enemyHp;
+
 }
