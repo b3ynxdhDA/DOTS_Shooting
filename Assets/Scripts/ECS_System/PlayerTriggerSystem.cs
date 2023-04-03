@@ -39,13 +39,14 @@ public class PlayerTriggerSystem : SystemBase
     protected override void OnUpdate()
     {
         // ジョブの生成
-        EnemyTriggerJob enemyTriggerJob = new EnemyTriggerJob();
-        enemyTriggerJob.allEnemyBulletEntity = GetComponentDataFromEntity<EnemyBulletTag>(true);
-        enemyTriggerJob.PlayerEntity = GetComponentDataFromEntity<PlayerTag>(true);
-        enemyTriggerJob.entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
+        PlayerTriggerJob playerTriggerJob = new PlayerTriggerJob();
+        playerTriggerJob.AllEnemyBulletEntity = GetComponentDataFromEntity<EnemyBulletTag>(true);
+        playerTriggerJob.AllEnemyEntity = GetComponentDataFromEntity<EnemyTag>(true);
+        playerTriggerJob.PlayerEntity = GetComponentDataFromEntity<PlayerTag>(true);
+        playerTriggerJob.entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
         // ジョブの実行
-        Dependency = enemyTriggerJob.Schedule(
+        Dependency = playerTriggerJob.Schedule(
             _stepPhysicsWorld.Simulation,
             ref _buildPhysicsWorld.PhysicsWorld,
             Dependency);
@@ -55,10 +56,12 @@ public class PlayerTriggerSystem : SystemBase
     }
 
     [BurstCompile]
-    struct EnemyTriggerJob : ITriggerEventsJob
+    struct PlayerTriggerJob : ITriggerEventsJob
     {
         // 敵の弾のエンティティを取得
-        [ReadOnly] public ComponentDataFromEntity<EnemyBulletTag> allEnemyBulletEntity;
+        [ReadOnly] public ComponentDataFromEntity<EnemyBulletTag> AllEnemyBulletEntity;
+        // 敵のエンティティを取得
+        [ReadOnly] public ComponentDataFromEntity<EnemyTag> AllEnemyEntity;
         // プレイヤーのエンティティを取得
         [ReadOnly] public ComponentDataFromEntity<PlayerTag> PlayerEntity;
 
@@ -69,22 +72,52 @@ public class PlayerTriggerSystem : SystemBase
             Entity entityA = triggerEvent.EntityA;
             Entity entityB = triggerEvent.EntityB;
 
+            // 弾が当たった時のダメージ
+            const float HIT_DAMAGE = 1f;
+
             // 敵の弾同士が接触した場合
-            if(allEnemyBulletEntity.HasComponent(entityA) && allEnemyBulletEntity.HasComponent(entityB))
+            if (AllEnemyBulletEntity.HasComponent(entityA) && AllEnemyBulletEntity.HasComponent(entityB))
             {
                 return;
             }
 
             // 敵の弾とプレイヤーが接触した場合
-            if (allEnemyBulletEntity.HasComponent(entityA) && PlayerEntity.HasComponent(entityB))
+            if (AllEnemyBulletEntity.HasComponent(entityA) && PlayerEntity.HasComponent(entityB))
             {
+                // 敵の弾を消す
                 entityCommandBuffer.DestroyEntity(entityA);
-                //entityCommandBuffer.DestroyEntity(entityB);
+                // プレイヤーのエンティティのhpを減らす
+                entityCommandBuffer.SetComponent(entityB, new PlayerTag
+                {
+                    _playerHp = PlayerEntity[entityB]._playerHp - HIT_DAMAGE
+                });
             }
-            else if (PlayerEntity.HasComponent(entityA) && allEnemyBulletEntity.HasComponent(entityB))
+            else if (PlayerEntity.HasComponent(entityA) && AllEnemyBulletEntity.HasComponent(entityB))
             {
+                // 敵の弾を消す
                 entityCommandBuffer.DestroyEntity(entityB);
-                //entityCommandBuffer.DestroyEntity(entityA);
+                // プレイヤーのエンティティのhpを減らす
+                entityCommandBuffer.SetComponent(entityA, new PlayerTag
+                {
+                    _playerHp = PlayerEntity[entityA]._playerHp - HIT_DAMAGE
+                });
+            }
+            // 敵とプレイヤーが接触した場合
+            else if (AllEnemyEntity.HasComponent(entityA) && PlayerEntity.HasComponent(entityB))
+            {
+                // プレイヤーのエンティティのhpを減らす
+                entityCommandBuffer.SetComponent(entityB, new PlayerTag
+                {
+                    _playerHp = PlayerEntity[entityB]._playerHp - HIT_DAMAGE
+                });
+            }
+            else if (PlayerEntity.HasComponent(entityA) && AllEnemyEntity.HasComponent(entityB))
+            {
+                // プレイヤーのエンティティのhpを減らす
+                entityCommandBuffer.SetComponent(entityA, new PlayerTag
+                {
+                    _playerHp = PlayerEntity[entityA]._playerHp - HIT_DAMAGE
+                });
             }
         }
     }

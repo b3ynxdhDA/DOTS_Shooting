@@ -64,12 +64,16 @@ public class EnemyTriggerSystem : SystemBase
 
         public EntityCommandBuffer entityCommandBuffer;
 
+
         public void Execute(TriggerEvent triggerEvent)
         {
             Entity entityA = triggerEvent.EntityA;
             Entity entityB = triggerEvent.EntityB;
 
-            float hitdamage = 1f;
+            // 弾が当たった時のダメージ
+            const float HIT_DAMAGE = 1f;
+
+
             // 敵同士が接触した場合
             if(EnemyEntity.HasComponent(entityA) && EnemyEntity.HasComponent(entityB))
             {
@@ -79,17 +83,23 @@ public class EnemyTriggerSystem : SystemBase
             // 敵とプレイヤーの弾が接触した場合
             if (EnemyEntity.HasComponent(entityA) && PlayerBulletsEntity.HasComponent(entityB))
             {
-                entityCommandBuffer.DestroyEntity(entityA);
+                // プレイヤーの弾を消す
                 entityCommandBuffer.DestroyEntity(entityB);
+                // 敵のエンティティのhpを減らす
                 entityCommandBuffer.SetComponent(entityA, new EnemyTag
                 {
-                    _enemyHp = EnemyEntity[entityA]._enemyHp - hitdamage
+                    _enemyHp = EnemyEntity[entityA]._enemyHp - HIT_DAMAGE
                 });
             }
             else if (PlayerBulletsEntity.HasComponent(entityA) && EnemyEntity.HasComponent(entityB))
             {
-                entityCommandBuffer.DestroyEntity(entityB);
+                // プレイヤーの弾を消す
                 entityCommandBuffer.DestroyEntity(entityA);
+                // 敵のエンティティのhpを減らす
+                entityCommandBuffer.SetComponent(entityB, new EnemyTag
+                {
+                    _enemyHp = EnemyEntity[entityB]._enemyHp - HIT_DAMAGE
+                });
             }
         }
     }

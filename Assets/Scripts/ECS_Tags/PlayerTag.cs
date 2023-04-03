@@ -1,7 +1,7 @@
 using Unity.Entities;
 
 /// <summary>
-/// 弾のコンポーネントタグ
+/// プレイヤーのコンポーネントタグ
 /// </summary>
 [GenerateAuthoringComponent]
 public struct PlayerTag : IComponentData

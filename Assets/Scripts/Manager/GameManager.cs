@@ -14,10 +14,7 @@ public class GameManager : MonoBehaviour
     public SEManager _seManager = default;
 
     // ゲームマネージャーインスタンス
-    public static GameManager instance { get; set; }
-
-    // GameManager内のゲームステート
-    private GameState _game_State = GameState.Title;
+    public static GameManager instance { get; private set; }
 
     // 他のクラスから参照されるゲームステート
     public GameState game_State { get; set; } = GameState.Title;
@@ -60,53 +57,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
     }
 
     private void Update()
     {
-        // ゲームステートが切り替わったら
-        if(_game_State != game_State)
-        {
-            // 切り替え後のゲームステートでそれぞれ処理する
-            switch (game_State)
-            {
-                case GameState.Title:
-                    _game_State = game_State;
-
-                    ChangeStateToTitle();
-                    break;
-                case GameState.GameRedy:
-                    _game_State = game_State;
-
-                    ChangeStateToGameRedy();
-                    break;
-                case GameState.GameNow:
-                    _game_State = game_State;
-
-                    ChangeStateToGameNow();
-                    break;
-                case GameState.GameOver:
-                    _game_State = game_State;
-
-                    ChangeStateToGameOver();
-                    break;
-                case GameState.Pause:
-                    _game_State = game_State;
-
-                    ChangeStateToPause();
-                    break;
-                case GameState.Config:
-                    _game_State = game_State;
-
-                    ChangeStateToConfig();
-                    break;
-                case GameState.Result:
-                    _game_State = game_State;
-
-                    ChangeStateToResult();
-                    break;
-            }
-        }
+        // seManagerでUpdateしないためここで呼び出す
         _seManager.CheckVolume();
     }
 
@@ -116,7 +72,7 @@ public class GameManager : MonoBehaviour
     public void CallConfigUI()
     {
         _configCanvas.SetActive(true);
-        _game_State = GameState.Config;
+        game_State = GameState.Config;
     }
 
     /// <summary>

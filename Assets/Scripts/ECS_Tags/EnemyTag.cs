@@ -6,7 +6,7 @@ using Unity.Entities;
 [GenerateAuthoringComponent]
 public struct EnemyTag : IComponentData
 {
-    // 動くスピード
+    // 敵の体力
     public float _enemyHp;
 
 }

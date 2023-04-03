@@ -15,10 +15,10 @@ public class BulletShootSystem : SystemBase
     // 弾を発射してから経過した時間
     private float _shootCoolTime;
 
-    // 定数宣言--------------------------------------------------------
     // 射撃の間隔
-    const float _SHOOT_INTERVAL = 0.15f;
+    private float _ShootInterval = 0.15f;
 
+    // 定数宣言--------------------------------------------------------
     // 射撃する列の間隔
     const float _SHOOT_SPACE = 0.5f;
 
@@ -45,7 +45,7 @@ public class BulletShootSystem : SystemBase
         EntityCommandBuffer comandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
         // クールタイムがインターバルより大きかったら弾を発射する
-        if(_shootCoolTime > _SHOOT_INTERVAL)
+        if(_shootCoolTime > _ShootInterval)
         {
             Entities
                 .WithName("Straight_Shoot")
@@ -53,6 +53,7 @@ public class BulletShootSystem : SystemBase
                 .WithoutBurst()
                 .ForEach((in GunPortTag gunporttag, in StraightGunPortTag straightTag, in LocalToWorld localToWorld) =>
                 {
+                    // 発射する弾の列の数だけループ
                     for (int i = 0; i < straightTag._lines; i++)
                     {
                         // PrefabとなるEntityから弾を複製する
@@ -82,6 +83,7 @@ public class BulletShootSystem : SystemBase
                 .WithoutBurst()
                 .ForEach((in GunPortTag gunporttag, in WideGunPortTag WideTag, in LocalToWorld localToWorld) =>
                 {
+                    // 発射する弾の列の数だけループ
                     for (int i = 0; i < WideTag._lines; i++)
                     {
                         // PrefabとなるEntityから弾を複製する

@@ -8,4 +8,7 @@ public struct GunPortTag : IComponentData
 {
     // 発射する弾のエンティティ
     public Entity _straightBulletEntity;
+
+    // 連射の間隔
+    public float _shootInterval;
 }
