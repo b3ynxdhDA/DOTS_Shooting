@@ -1,4 +1,5 @@
 using Unity.Entities;
+using UnityEngine;
 
 /// <summary>
 /// 弾の発射地点のコンポーネントタグ
@@ -10,5 +11,8 @@ public struct GunPortTag : IComponentData
     public Entity _straightBulletEntity;
 
     // 連射の間隔
-    public float _shootInterval;
+    public float _shootCoolTime;
+
+    // 連射のクールタイム(発射地点ごとに連射のクールタイムを変えるためTagが保持する)
+    [HideInInspector] public float _shootInterval;
 }

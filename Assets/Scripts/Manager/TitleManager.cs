@@ -6,13 +6,6 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class TitleManager : MonoBehaviour
 {
-    void Start()
-    {
-        Time.timeScale = 1f;
-        // ゲームの状態をTitleにする
-        GameManager.instance.game_State = GameManager.GameState.Title;
-    }
-
     /// <summary>
     /// ゲームシーンに遷移するボタンが押されたら
     /// </summary>

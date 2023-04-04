@@ -5,18 +5,11 @@ using Unity.Transforms;
 /// <summary>
 /// 弾を生成するシステム
 /// </summary>
-[AlwaysUpdateSystem]
 public class BulletShootSystem : SystemBase
 {
     // 変数宣言------------------------------------------------------------------
     // 実行タイミングを管理しているシステムグループ
     private BeginSimulationEntityCommandBufferSystem _entityCommandBufferSystem;
-
-    // 弾を発射してから経過した時間
-    private float _shootCoolTime;
-
-    // 射撃の間隔
-    private float _ShootInterval = 0.15f;
 
     // 定数宣言--------------------------------------------------------
     // 射撃する列の間隔
@@ -44,14 +37,14 @@ public class BulletShootSystem : SystemBase
         // コマンドバッファを取得
         EntityCommandBuffer comandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
-        // クールタイムがインターバルより大きかったら弾を発射する
-        if(_shootCoolTime > _ShootInterval)
-        {
-            Entities
-                .WithName("Straight_Shoot")
-                .WithAll<GunPortTag, StraightGunPortTag>()
-                .WithoutBurst()
-                .ForEach((in GunPortTag gunporttag, in StraightGunPortTag straightTag, in LocalToWorld localToWorld) =>
+        Entities
+            .WithName("Straight_Shoot")
+            .WithAll<GunPortTag, StraightGunPortTag>()
+            .WithoutBurst()
+            .ForEach((ref GunPortTag gunporttag, in StraightGunPortTag straightTag, in LocalToWorld localToWorld) =>
+            {
+                // クールタイムが0より小さかったら弾を発射する
+                if (gunporttag._shootInterval < 0)
                 {
                     // 発射する弾の列の数だけループ
                     for (int i = 0; i < straightTag._lines; i++)
@@ -61,7 +54,7 @@ public class BulletShootSystem : SystemBase
 
                         // 発射の列ごとの位置を計算する
                         float3 pos = new float3(localToWorld.Position.x + i - _SHOOT_SPACE * straightTag._lines + _SHOOT_SPACE, localToWorld.Position.y, 0f);
-                        
+
                         // 位置の初期化
                         comandBuffer.SetComponent(instantiateEntity, new Translation
                         {
@@ -75,13 +68,21 @@ public class BulletShootSystem : SystemBase
                         });
 
                     }
-                }).Run();// メインスレッドで実行
+                    // インターバルをセットする
+                    gunporttag._shootInterval = gunporttag._shootCoolTime;
+                }
+                // インターバルから経過時間を減らす
+                gunporttag._shootInterval -= Time.DeltaTime;
+            }).Run();// メインスレッドで実行
 
-            Entities
-                .WithName("Wide_Shoot")
-                .WithAll<GunPortTag, WideGunPortTag>()
-                .WithoutBurst()
-                .ForEach((in GunPortTag gunporttag, in WideGunPortTag WideTag, in LocalToWorld localToWorld) =>
+        Entities
+            .WithName("Wide_Shoot")
+            .WithAll<GunPortTag, WideGunPortTag>()
+            .WithoutBurst()
+            .ForEach((ref GunPortTag gunporttag, in WideGunPortTag WideTag, in LocalToWorld localToWorld) =>
+            {
+                // クールタイムが0より小さかったら弾を発射する
+                if (gunporttag._shootInterval < 0)
                 {
                     // 発射する弾の列の数だけループ
                     for (int i = 0; i < WideTag._lines; i++)
@@ -113,24 +114,38 @@ public class BulletShootSystem : SystemBase
                         });
 
                     }
-                }).Run();// メインスレッドで実行
+                    // インターバルをセットする
+                    gunporttag._shootInterval = gunporttag._shootCoolTime;
+                }
+                // インターバルから経過時間を減らす
+                gunporttag._shootInterval -= Time.DeltaTime;
+            }).Run();// メインスレッドで実行
 
-            Entities
-                .WithName("Aim_Shoot")
-                .WithAll<GunPortTag, AimGunPortTag>()
-                .WithoutBurst()
-                .ForEach((in GunPortTag gunporttag, in AimGunPortTag aimgunporttag, in LocalToWorld localToWorld) =>
+        Entities
+            .WithName("Aim_Shoot")
+            .WithAll<GunPortTag, AimGunPortTag>()
+            .WithoutBurst()
+            .ForEach((ref GunPortTag gunporttag, in AimGunPortTag aimgunporttag, in LocalToWorld localToWorld) =>
+            {
+                // 
+                //@if(aimgunporttag._targetEntity != Entity.Null && EntityManager.Exists(aimgunporttag._targetEntity))
+
+                // クールタイムが0より小さかったら弾を発射する
+                if (gunporttag._shootInterval < 0)
                 {
                     // ターゲットのローカル座標を取得
-                    //EntityQuery aimTargetEntityQuery = EntityManager.CreateEntityQuery(typeof(EnemyTag));
-                    //Entity aimTargetEntity = aimTargetEntityQuery.GetSingletonEntity();
-                    LocalToWorld aimTargetLocalToWorld = GetComponent<LocalToWorld>(aimgunporttag._targetEntity);
+                    //LocalToWorld aimTargetLocalToWorld = GetComponent<LocalToWorld>(aimgunporttag._targetEntity);
 
-                    // 発射台から見たプレイヤーの向き
-                    float3 direction = math.normalizesafe(aimTargetLocalToWorld.Position - localToWorld.Position);
-
+                    // ターゲットのローカル座標を取得
+                    ComponentDataFromEntity<Translation> translationComponentData = GetComponentDataFromEntity<Translation>(true);
+                    float3 targetPosition = translationComponentData[aimgunporttag._targetEntity].Value;
+                    
                     // PrefabとなるEntityから弾を複製する
                     Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
+                   
+                    // 発射台から見たプレイヤーの向き
+                    //float3 direction = math.normalizesafe(aimTargetLocalToWorld.Position - localToWorld.Position);
+                    float3 direction = math.normalizesafe(targetPosition - localToWorld.Position);
 
                     // 位置の初期化
                     comandBuffer.SetComponent(instantiateEntity, new Translation
@@ -149,17 +164,15 @@ public class BulletShootSystem : SystemBase
                     {
                         _moveDirection = direction
                     });
+                    // インターバルをセットする
+                    gunporttag._shootInterval = gunporttag._shootCoolTime;
+                }
+                // インターバルから経過時間を減らす
+                gunporttag._shootInterval -= Time.DeltaTime;
+            }).Run();// メインスレッドで実行
 
-                }).Run();// メインスレッドで実行
-
-            // 指定したJob完了後にECBに登録した命令を実行
-            _entityCommandBufferSystem.AddJobHandleForProducer(Dependency);
-
-            // クールタイムを0にする
-            _shootCoolTime = 0;
-        }
-
-        // クールタイムに経過時間を反映
-        _shootCoolTime += Time.DeltaTime;
+        // 指定したJob完了後にECBに登録した命令を実行
+        _entityCommandBufferSystem.AddJobHandleForProducer(Dependency);
     }
+
 }
