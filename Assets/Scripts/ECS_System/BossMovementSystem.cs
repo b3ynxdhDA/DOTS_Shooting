@@ -8,14 +8,27 @@ using Unity.Collections;
 /// </summary>
 public class BossMovementSystem : ComponentSystem
 {
+    // 変数宣言------------------------------------------------------------------
     // ボスキャラクターの移動の間隔
     private float _moveInterval = 5f;
 
-    // 
-    private float _moveTimer = 0;
+    // 次の移動地点の引数
+    int _nextMovePointNum = 0;
 
     // 
-    int _nextNum = 0;
+    float3 nextPoint;
+
+    //
+    float3 moveVolume;
+
+    // 定数宣言------------------------------------------------------------------
+    // 
+    const float _INTERVAL_MAX = 8f;
+
+    //
+    const float _INTERVAL_MIN = 3f;
+
+
 
     /// <summary>
     /// システム有効時にフレーム毎に呼ばれる処理
@@ -24,25 +37,37 @@ public class BossMovementSystem : ComponentSystem
     {
         // 直前のフレームからの経過時間
         float deltaTime = Time.DeltaTime;
-
-        if (_moveTimer > _moveInterval)
-        {
-            Entities
-                //.WithName("Boss_Move")
-                .WithAll<BossEnemyTag>()
-                .ForEach((ref Translation translation, DynamicBuffer<BossMoveElement> bossMoves) =>
+        Entities
+            //.WithName("Boss_Move")
+            .WithAll<BossEnemyTag>()
+            .ForEach((ref Translation translation, DynamicBuffer<BossMoveElement> dynamicBuffer) =>
+            {
+                if (_moveInterval < 0)
                 {
-                    Entity nextPointEntity = bossMoves[1]._movePoints;
-                    Translation nextPoint = EntityManager.GetComponentData<Translation>(nextPointEntity);
-                    
-                    // BulletTagのみを持つエンティティを進行方向へ動かす
-                    translation.Value += nextPoint.Value - translation.Value * deltaTime;
+                    // タイマーを初期化
+                    _moveInterval = UnityEngine.Random.Range(_INTERVAL_MIN, _INTERVAL_MAX);
+                    // ランダムに次の移動地点の引数を設定
+                    _nextMovePointNum = UnityEngine.Random.Range(0, dynamicBuffer.Length);
 
-                });// 分散並列スレッド処理.ScheduleParallel()
+                    // 
+                    BossMoveElement bossMoveElement = dynamicBuffer[_nextMovePointNum];
 
-            // タイマーを初期化
-            _moveTimer = 0;
-        }
-        _moveTimer += Time.DeltaTime;
+                    nextPoint = bossMoveElement._movePoints;
+
+                    moveVolume = nextPoint - translation.Value * 0.1f;
+
+                }
+
+                // ボスの現在地がX,Yともに次の移動地点より小さい場合
+                // @@if (moveVolume.x == 0 && moveVolume.y == 0)@@
+                {
+                    // 動かす
+                    translation.Value += moveVolume * deltaTime;
+                }
+                 
+
+            });// 分散並列スレッド処理.ScheduleParallel()
+
+        _moveInterval -= Time.DeltaTime;
     }
 }

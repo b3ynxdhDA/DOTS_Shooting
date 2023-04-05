@@ -2,12 +2,12 @@ using Unity.Entities;
 using Unity.Mathematics;
 
 /// <summary>
-/// オートエイム弾のコンポーネントタグ
+/// ボスキャラクターの移動地点のコンポーネントバッファー
 /// </summary>
 [GenerateAuthoringComponent]
 [InternalBufferCapacity(3)]
 public struct BossMoveElement : IBufferElementData
 {
-    // ターゲットへの角度
-    public Entity _movePoints;
+    // ボスキャラクターの移動する位置
+    public float3 _movePoints;
 }
