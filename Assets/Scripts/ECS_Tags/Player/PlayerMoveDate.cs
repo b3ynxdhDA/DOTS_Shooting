@@ -1,13 +1,15 @@
 using Unity.Entities;
+using Unity.Mathematics;
 
 /// <summary>
 /// プレイヤーのコンポーネントタグ
 /// </summary>
 [GenerateAuthoringComponent]
-public struct PlayerTag : IComponentData
+public struct PlayerMoveDate : IComponentData
 {
     // 動くスピード
     public float _moveSpeed;
-    // プレイヤーの体力
-    public float _playerHp;
+
+    // 動くスピード
+    public float3 _moveDirection;
 }

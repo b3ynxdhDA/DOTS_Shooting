@@ -75,18 +75,18 @@ public class PlayerTriggerSystem : SystemBase
             // 弾が当たった時のダメージ
             const float HIT_DAMAGE = 1f;
 
-            // 敵の弾同士が接触した場合
-            if (AllEnemyBulletEntity.HasComponent(entityA) && AllEnemyBulletEntity.HasComponent(entityB))
+            // プレイヤー同士が接触した場合
+            if (PlayerEntity.HasComponent(entityA) && PlayerEntity.HasComponent(entityB))
             {
                 return;
             }
 
-            // 敵の弾とプレイヤーが接触した場合
+            // 敵の弾とプレイヤーが接触した場合は敵の弾を消してプレイヤーのHPを減らす
             if (AllEnemyBulletEntity.HasComponent(entityA) && PlayerEntity.HasComponent(entityB))
             {
                 // 敵の弾を消す
                 entityCommandBuffer.DestroyEntity(entityA);
-                // プレイヤーのエンティティのhpを減らす
+                // プレイヤーのhpを減らす
                 entityCommandBuffer.SetComponent(entityB, new PlayerTag
                 {
                     _playerHp = PlayerEntity[entityB]._playerHp - HIT_DAMAGE
@@ -96,16 +96,16 @@ public class PlayerTriggerSystem : SystemBase
             {
                 // 敵の弾を消す
                 entityCommandBuffer.DestroyEntity(entityB);
-                // プレイヤーのエンティティのhpを減らす
+                // プレイヤーのhpを減らす
                 entityCommandBuffer.SetComponent(entityA, new PlayerTag
                 {
                     _playerHp = PlayerEntity[entityA]._playerHp - HIT_DAMAGE
                 });
             }
-            // 敵とプレイヤーが接触した場合
+            // 敵とプレイヤーが接触した場合プレイヤーのHPを減らす
             else if (AllEnemyEntity.HasComponent(entityA) && PlayerEntity.HasComponent(entityB))
             {
-                // プレイヤーのエンティティのhpを減らす
+                // プレイヤーのhpを減らす
                 entityCommandBuffer.SetComponent(entityB, new PlayerTag
                 {
                     _playerHp = PlayerEntity[entityB]._playerHp - HIT_DAMAGE
@@ -113,7 +113,7 @@ public class PlayerTriggerSystem : SystemBase
             }
             else if (PlayerEntity.HasComponent(entityA) && AllEnemyEntity.HasComponent(entityB))
             {
-                // プレイヤーのエンティティのhpを減らす
+                // プレイヤーのhpを減らす
                 entityCommandBuffer.SetComponent(entityA, new PlayerTag
                 {
                     _playerHp = PlayerEntity[entityA]._playerHp - HIT_DAMAGE

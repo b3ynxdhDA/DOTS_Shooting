@@ -67,6 +67,11 @@ public class BulletShootSystem : SystemBase
                             Value = localToWorld.Rotation
                         });
 
+                        // 弾の進む角度を設定
+                        comandBuffer.SetComponent(instantiateEntity, new BulletMoveDirectionTag
+                        {
+                            _moveDirection = localToWorld.Up
+                        });
                     }
                     // インターバルをセットする
                     gunporttag._shootInterval = gunporttag._shootCoolTime;
@@ -113,6 +118,11 @@ public class BulletShootSystem : SystemBase
                             Value = quaternion.LookRotationSafe(diff, math.up())
                         });
 
+                        // 弾の進む角度を設定
+                        comandBuffer.SetComponent(instantiateEntity, new BulletMoveDirectionTag
+                        {
+                            _moveDirection = localToWorld.Up
+                        });
                     }
                     // インターバルをセットする
                     gunporttag._shootInterval = gunporttag._shootCoolTime;
@@ -127,25 +137,24 @@ public class BulletShootSystem : SystemBase
             .WithoutBurst()
             .ForEach((ref GunPortTag gunporttag, in AimGunPortTag aimgunporttag, in LocalToWorld localToWorld) =>
             {
-                // 
-                //@if(aimgunporttag._targetEntity != Entity.Null && EntityManager.Exists(aimgunporttag._targetEntity))
-
                 // クールタイムが0より小さかったら弾を発射する
                 if (gunporttag._shootInterval < 0)
                 {
-                    // ターゲットのローカル座標を取得
-                    //LocalToWorld aimTargetLocalToWorld = GetComponent<LocalToWorld>(aimgunporttag._targetEntity);
+                    // 発射台から見たターゲットの向きを上向きにして初期化
+                    float3 direction = localToWorld.Up;
 
-                    // ターゲットのローカル座標を取得
-                    ComponentDataFromEntity<Translation> translationComponentData = GetComponentDataFromEntity<Translation>(true);
-                    float3 targetPosition = translationComponentData[aimgunporttag._targetEntity].Value;
-                    
-                    // PrefabとなるEntityから弾を複製する
+                    // ターゲットのエンティティが存在するとき
+                    if (aimgunporttag._targetEntity != Entity.Null)
+                    {
+                        // ターゲットのローカル座標を取得
+                        ComponentDataFromEntity<Translation> translationComponentData = GetComponentDataFromEntity<Translation>(true);
+                        float3 targetPosition = translationComponentData[aimgunporttag._targetEntity].Value;
+
+                        // 発射台から見たターゲットの向きを計算
+                        direction = math.normalizesafe(targetPosition - localToWorld.Position);
+                    }
+                    // PrefabのEntityから弾を複製する
                     Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
-                   
-                    // 発射台から見たプレイヤーの向き
-                    //float3 direction = math.normalizesafe(aimTargetLocalToWorld.Position - localToWorld.Position);
-                    float3 direction = math.normalizesafe(targetPosition - localToWorld.Position);
 
                     // 位置の初期化
                     comandBuffer.SetComponent(instantiateEntity, new Translation
@@ -159,8 +168,8 @@ public class BulletShootSystem : SystemBase
                         Value = quaternion.LookRotationSafe(direction, math.forward())
                     });
 
-                    // オートエイム弾の進む角度を設定
-                    comandBuffer.SetComponent(instantiateEntity, new AutoAimBulletTag
+                    // 弾の進む角度を設定
+                    comandBuffer.SetComponent(instantiateEntity, new BulletMoveDirectionTag
                     {
                         _moveDirection = direction
                     });

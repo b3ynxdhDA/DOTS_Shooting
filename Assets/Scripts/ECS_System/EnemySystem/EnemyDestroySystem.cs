@@ -34,10 +34,11 @@ public class EnemyDestroySystem : SystemBase
         Entities
             .WithName("Enemy_Destroy")
             .WithAll<EnemyTag>()
+            .WithNone<BossEnemyTag>()
             .WithBurst()
             .ForEach((Entity entity, in EnemyTag enemyTag) =>
             {
-                // 弾のエンティティが画面外に出たら消す
+                // 敵のHPが0以下になったら消す
                 if (enemyTag._enemyHp <= 0)
                 {
                     commandBuffer.DestroyEntity(entity);

@@ -23,13 +23,6 @@ public class PlayerStateSystem : SystemBase
         _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
     }
 
-    /// <summary>
-    /// システム実行停止時やOnDestroy()の前に呼ばれる処理
-    /// </summary>
-    protected override void OnStartRunning()
-    {
-
-    }
 
     /// <summary>
     /// システム有効時にフレーム毎に呼ばれる処理
@@ -37,23 +30,23 @@ public class PlayerStateSystem : SystemBase
     protected override void OnUpdate()
     {
         // コマンドバッファを取得
-        EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
-
-        Entities
-            .WithName("Player_State")
-            .WithAll<PlayerTag>()
-            .WithBurst()
-            .ForEach((Entity entity, in PlayerTag playerTag) =>
-            {
-                // プレイヤーのHPが0以下なら消す
-                if (playerTag._playerHp <= 0)
-                {
-                    commandBuffer.DestroyEntity(entity);
-                }
-
-            }).WithoutBurst().Run();// メインスレッド処理
-
-        // 指定したJob完了後にECBに登録した命令を実行
-        _entityCommandBufferSystem.AddJobHandleForProducer(Dependency);
+       EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
+       
+       Entities
+           .WithName("Player_State")
+           .WithAll<PlayerTag>()
+           .WithBurst()
+           .ForEach((Entity entity, in PlayerTag playerTag) =>
+           {
+               // プレイヤーのHPが0以下なら消す
+               if (playerTag._playerHp <= 0)
+               {
+                   commandBuffer.DestroyEntity(entity);
+               }
+       
+           }).Run();// メインスレッド処理
+       
+       // 指定したJob完了後にECBに登録した命令を実行
+       _entityCommandBufferSystem.AddJobHandleForProducer(Dependency);
     }
 }

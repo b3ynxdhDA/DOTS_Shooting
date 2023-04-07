@@ -6,7 +6,7 @@ using UnityEngine;
 /// オートエイム弾のコンポーネントタグ
 /// </summary>
 [GenerateAuthoringComponent]
-public struct AutoAimBulletTag : IComponentData
+public struct BulletMoveDirectionTag : IComponentData
 {
     // ターゲットへの角度
     [HideInInspector]public float3 _moveDirection;
