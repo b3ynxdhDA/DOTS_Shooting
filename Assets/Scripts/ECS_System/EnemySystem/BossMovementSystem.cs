@@ -37,7 +37,6 @@ public class BossMovementSystem : ComponentSystem
         // 直前のフレームからの経過時間
         float deltaTime = Time.DeltaTime;
         Entities
-            //.WithName("Boss_Move")
             .WithAll<BossEnemyTag>()
             .ForEach((ref Translation translation, DynamicBuffer<BossMoveElement> dynamicBuffer) =>
             {

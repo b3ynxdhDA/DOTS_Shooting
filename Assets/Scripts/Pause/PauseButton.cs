@@ -15,7 +15,7 @@ public class PauseButton : MonoBehaviour
     public void OnTitleButton()
     {
         // タイトルシーンに戻る
-        SceneManager.LoadScene("TitleScene");
+        SceneController.LoadScene("TitleScene");
     }
     /// <summary>
     /// リトライボタンが押されたら
@@ -23,7 +23,7 @@ public class PauseButton : MonoBehaviour
     public void OnRetryButton()
     {
         // タイトルシーンに戻る
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneController.LoadScene(SceneController.GetActiveScene().name);
     }
 
     /// <summary>

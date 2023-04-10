@@ -13,8 +13,21 @@ public class GameManager : MonoBehaviour
     [HideInInspector]// SEマネージャー
     public SEManager _seManager = default;
 
-    // ゲームマネージャーインスタンス
+    /// <summary>
+    /// ゲームマネージャー自身を参照する変数
+    /// </summary>
     public static GameManager instance { get; private set; }
+
+    /// <summary>
+    /// ボスキャラクターを管理するクラスの参照
+    /// </summary>
+    public BossManager BossManager { get; private set; }
+
+    /// <summary>
+    /// シーン遷移を管理するクラスの参照
+    /// </summary>
+    public SceneController SceneController { get; private set; }
+
 
     // 他のクラスから参照されるゲームステート
     public GameState game_State { get; set; } = GameState.Title;
@@ -67,6 +80,21 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// ゲームのプレイ状態を初期化する
+    /// </summary>
+    public void InitializeGame()
+    {
+        // ボスキャラクターの初期化
+        BossManager.BossInitialize();
+
+        // ゲームの状態をゲーム開始前にする
+        game_State = GameState.GameRedy;
+
+        // スコアを初期化
+        _nowScore = 0;
+    }
+
+    /// <summary>
     /// コンフィグキャンバスを表示
     /// </summary>
     public void CallConfigUI()
@@ -88,70 +116,4 @@ public class GameManager : MonoBehaviour
             Application.Quit();
 #endif
     }
-
-    #region ゲームステート切り替え時の処理メソッド
-    /// <summary>
-    /// ゲームステートがTitleになったとき
-    /// </summary>
-    private void ChangeStateToTitle()
-    {
-        // マウスカーソルを表示する
-        Cursor.visible = true;
-    }
-    /// <summary>
-    /// ゲームステートがGameRedyになったとき
-    /// </summary>
-    private void ChangeStateToGameRedy()
-    {
-        // スコアを初期化
-        _nowScore = 0;
-
-        // カーソルをゲーム画面内でのみ動かせるようにする
-        Cursor.lockState = CursorLockMode.Confined;
-
-        // マウスカーソルを非表示にする
-        Cursor.visible = false;
-    }
-    /// <summary>
-    /// ゲームステートがGameNowになったとき
-    /// </summary>
-    private void ChangeStateToGameNow()
-    {
-        // マウスカーソルを非表示にする
-        Cursor.visible = false;
-    }
-    /// <summary>
-    /// ゲームステートがGameOverになったとき
-    /// </summary>
-    private void ChangeStateToGameOver()
-    {
-
-    }
-    /// <summary>
-    /// ゲームステートがPauseになったとき
-    /// </summary>
-    private void ChangeStateToPause()
-    {
-        // マウスカーソルを表示する
-        Cursor.visible = true;
-    }
-    /// <summary>
-    /// ゲームステートがConfigになったとき
-    /// </summary>
-    private void ChangeStateToConfig()
-    {
-
-    }
-    /// <summary>
-    /// ゲームステートがResultになったとき
-    /// </summary>
-    private void ChangeStateToResult()
-    {
-        // マウスカーソルを表示する
-        Cursor.visible = true;
-        // カーソルロックを解除する
-        Cursor.lockState = CursorLockMode.None;
-    }
-
-    #endregion
 }
