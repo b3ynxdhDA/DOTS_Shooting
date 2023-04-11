@@ -15,4 +15,7 @@ public struct GunPortTag : IComponentData
 
     // 連射のクールタイム(発射地点ごとに連射のクールタイムを変えるためTagが保持する)
     [HideInInspector] public float _shootInterval;
+
+    // 発射する弾の速度
+    [HideInInspector] public float _bulletSpeed;
 }

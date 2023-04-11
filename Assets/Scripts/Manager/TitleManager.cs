@@ -11,8 +11,8 @@ public class TitleManager : MonoBehaviour
     /// </summary>
     public void OnGameScene()
     {
-        GameManager.instance.game_State = GameManager.GameState.GameRedy;
-        SceneController.LoadScene("GameScene");
+        GameManager.instance.gameState = GameManager.GameState.GameRedy;
+        SceneManager.LoadScene("GameScene");
     }
 
     /// <summary>

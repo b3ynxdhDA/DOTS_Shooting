@@ -72,6 +72,12 @@ public class BulletShootSystem : SystemBase
                         {
                             _moveDirection = localToWorld.Up
                         });
+
+                        // 弾の進む角度を設定
+                        comandBuffer.SetComponent(instantiateEntity, new BulletTag
+                        {
+                            _bulletSpeed = gunporttag._bulletSpeed
+                        });
                     }
                     // インターバルをセットする
                     gunporttag._shootInterval = gunporttag._shootCoolTime;
@@ -123,6 +129,12 @@ public class BulletShootSystem : SystemBase
                         {
                             _moveDirection = localToWorld.Up
                         });
+
+                        // 弾の進む角度を設定
+                        comandBuffer.SetComponent(instantiateEntity, new BulletTag
+                        {
+                            _bulletSpeed = gunporttag._bulletSpeed
+                        });
                     }
                     // インターバルをセットする
                     gunporttag._shootInterval = gunporttag._shootCoolTime;
@@ -172,6 +184,12 @@ public class BulletShootSystem : SystemBase
                     comandBuffer.SetComponent(instantiateEntity, new BulletMoveDirectionTag
                     {
                         _moveDirection = direction
+                    });
+
+                    // 弾の進む角度を設定
+                    comandBuffer.SetComponent(instantiateEntity, new BulletTag
+                    {
+                        _bulletSpeed = gunporttag._bulletSpeed
                     });
                     // インターバルをセットする
                     gunporttag._shootInterval = gunporttag._shootCoolTime;

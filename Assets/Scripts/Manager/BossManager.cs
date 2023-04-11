@@ -1,23 +1,58 @@
-
-/// <summary>
-/// ボスキャラクターを管理する
-/// </summary>
-public class BossManager 
+namespace shooting
 {
-    #region 変数宣言
     /// <summary>
-    /// ボスキャラクターの状態が何段階目か
+    /// ボスキャラクターを管理する
     /// </summary>
-    public int BossPhaseCount { get; private set; }
-
-    #endregion
-
-    #region メソッド
-    public void BossInitialize()
+    public class BossManager
     {
-        BossPhaseCount = 0;
+        #region 変数宣言
+        /// <summary>
+        /// 第1段階のボスの駒データ
+        /// </summary>
+        public KomaData BossKomaData0 { get; private set; }
+        /// <summary>
+        /// 第2段階のボスの駒データ
+        /// </summary>
+        public KomaData BossKomaData1 { get; private set; }
+        /// <summary>
+        /// 第3段階のボスの駒データ
+        /// </summary>
+        public KomaData BossKomaData2 { get; private set; }
 
+        /// <summary>
+        /// ボスキャラクターの状態が何段階目か
+        /// </summary>
+        public int BossPhaseCount { get; private set; }
+
+        #endregion
+
+        #region 公開メソッド
+        /// <summary>
+        /// ゲーム開始時にGameManagerから呼ばれるBossManagerの初期化メソッド
+        /// </summary>
+        /// <param name="komaData0">第1段階のボスの駒データ</param>
+        /// <param name="komaData1">第2段階のボスの駒データ</param>
+        /// <param name="komaData2">第3段階のボスの駒データ</param>
+        public BossManager(KomaData komaData0, KomaData komaData1, KomaData komaData2)
+        {
+            BossKomaData0 = komaData0;
+            BossKomaData1 = komaData1;
+            BossKomaData2 = komaData2;
+        }
+        public void BossInitialize()
+        {
+            BossPhaseCount = 0;
+
+        }
+
+        /// <summary>
+        /// ボスの攻撃段階を上げるメソッド
+        /// </summary>
+        public void UpdateBossCount()
+        {
+            BossPhaseCount++;
+        }
+
+        #endregion
     }
-
-    #endregion
 }

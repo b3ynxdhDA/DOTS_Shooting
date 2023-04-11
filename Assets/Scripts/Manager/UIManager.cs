@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
         _animator.SetBool("isGameOver", false);
 
         // ゲームの状態をゲーム中に
-        GameManager.instance.game_State = GameManager.GameState.GameRedy;
+        GameManager.instance.gameState = GameManager.GameState.GameRedy;
 
         // ゲームスタートのカウントダウンを開始
         StartCoroutine("CountdownCoroutine");
@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
         _scoreCountText.text = "" + GameManager.instance._nowScore;
 
         // ゲームステートがゲーム中の時
-        if (GameManager.instance.game_State == GameManager.GameState.GameNow)
+        if (GameManager.instance.gameState == GameManager.GameState.GameNow)
         {
             // タイマーの更新(増加)
             //_timerCount += Time.deltaTime;
@@ -83,24 +83,24 @@ public class UIManager : MonoBehaviour
         _startCountText.gameObject.SetActive(true);
 
         _startCountText.text = "3";
-        GameManager.instance._seManager.OnStartCount3_SE();
+        GameManager.instance.SEManager.OnStartCount3_SE();
         yield return new WaitForSeconds(1f);
 
         _startCountText.text = "2";
-        GameManager.instance._seManager.OnStartCount3_SE();
+        GameManager.instance.SEManager.OnStartCount3_SE();
         yield return new WaitForSeconds(1f);
 
         _startCountText.text = "1";
-        GameManager.instance._seManager.OnStartCount3_SE();
+        GameManager.instance.SEManager.OnStartCount3_SE();
         yield return new WaitForSeconds(1f);
 
         _startCountText.text = "GO!";
-        GameManager.instance._seManager.OnStartCountGo_SE();
+        GameManager.instance.SEManager.OnStartCountGo_SE();
         yield return new WaitForSeconds(1f);
 
         _startCountText.text = "";
         _startCountText.gameObject.SetActive(false);
-        GameManager.instance.game_State = GameManager.GameState.GameNow;
+        GameManager.instance.gameState = GameManager.GameState.GameNow;
     }
 
     /// <summary>
@@ -110,7 +110,7 @@ public class UIManager : MonoBehaviour
     IEnumerator GameOver()
     {
         // ゲームステートをGameOverに
-        GameManager.instance.game_State = GameManager.GameState.GameOver;
+        GameManager.instance.gameState = GameManager.GameState.GameOver;
 
         _gameOverText.SetActive(true);
         // ゲームオーバーテキストが降りてくるアニメーションを再生
@@ -119,7 +119,7 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         // ゲームステートをResultに
-        GameManager.instance.game_State = GameManager.GameState.Result;
+        GameManager.instance.gameState = GameManager.GameState.Result;
         
         _resultUI.SetActive(true);
     }

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 4072516406997768945}
   - component: {fileID: 7728990136919119252}
   m_Layer: 0
-  m_Name: BossEnemy_gyoku
+  m_Name: BossEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
