@@ -321,8 +321,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _straightBulletEntity: {fileID: 6885799998334693771, guid: 29049b4cdba3d234dbcdade345ddf202, type: 3}
-  _shootCoolTime: 0.5
+  _shootCoolTime: 0.2
   _shootInterval: 0
+  _bulletSpeed: 8
 --- !u!114 &2601728957169195955
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,5 +17,5 @@ public struct GunPortTag : IComponentData
     [HideInInspector] public float _shootInterval;
 
     // ”­ŽË‚·‚é’e‚Ì‘¬“x
-    [HideInInspector] public float _bulletSpeed;
+    public float _bulletSpeed;
 }

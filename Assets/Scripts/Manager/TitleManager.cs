@@ -1,35 +1,35 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// タイトルを管理するクラス
-/// </summary>
-public class TitleManager : MonoBehaviour
-{
     /// <summary>
-    /// ゲームシーンに遷移するボタンが押されたら
+    /// タイトルを管理するクラス
     /// </summary>
-    public void OnGameScene()
+    public class TitleManager : MonoBehaviour
     {
-        GameManager.instance.gameState = GameManager.GameState.GameRedy;
-        SceneManager.LoadScene("GameScene");
-    }
+        /// <summary>
+        /// ゲームシーンに遷移するボタンが押されたら
+        /// </summary>
+        public void OnGameScene()
+        {
+            GameManager.instance.gameState = GameManager.GameState.GameRedy;
+            SceneManager.LoadScene("GameScene");
+        }
 
-    /// <summary>
-    /// 設定ボタンが押されたら
-    /// </summary>
-    public void OnConfigButton()
-    {
-        // ゲームマネージャーの終了メソッドを呼び出す
-        GameManager.instance.CallConfigUI();
-    }
+        /// <summary>
+        /// 設定ボタンが押されたら
+        /// </summary>
+        public void OnConfigButton()
+        {
+            // ゲームマネージャーの終了メソッドを呼び出す
+            GameManager.instance.CallConfigUI();
+        }
 
-    /// <summary>
-    /// 終了ボタンが押されたら
-    /// </summary>
-    public void OnExitButton()
-    {
-        // ゲームマネージャーの終了メソッドを呼び出す
-        GameManager.instance.OnExit();
+        /// <summary>
+        /// 終了ボタンが押されたら
+        /// </summary>
+        public void OnExitButton()
+        {
+            // ゲームマネージャーの終了メソッドを呼び出す
+            GameManager.instance.OnExit();
+        }
     }
-}

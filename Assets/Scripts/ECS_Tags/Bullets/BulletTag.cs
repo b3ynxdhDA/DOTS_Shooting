@@ -1,4 +1,5 @@
 using Unity.Entities;
+using UnityEngine;
 
 /// <summary>
 /// 弾のコンポーネントタグ
@@ -7,5 +8,5 @@ using Unity.Entities;
 public struct BulletTag : IComponentData
 {
     // 弾の進むスピード
-    public float _bulletSpeed;
+    [HideInInspector] public float _bulletSpeed;
 }

@@ -1,143 +1,138 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace shooting
+/// <summary>
+/// ゲーム全体の状態を管理するクラス
+/// </summary>
+public class GameManager : MonoBehaviour
 {
+    #region 公開変数
+    [SerializeField, Header("設定のUICanvas")]
+    private GameObject _configCanvas = default;
+
     /// <summary>
-    /// ゲーム全体の状態を管理するクラス
+    /// ゲームマネージャー自身を参照する変数
     /// </summary>
-    public class GameManager : MonoBehaviour
+    public static GameManager instance { get; private set; }
+
+    /// <summary>
+    /// ボスキャラクターを管理するクラスの参照
+    /// </summary>
+    public BossManager BossManager { get; private set; }
+
+    /// <summary>
+    /// SEManagerクラスの参照
+    /// </summary>
+    public SEManager SEManager { get; private set; }
+
+    /// <summary>
+    /// シーン遷移を管理するクラスの参照
+    /// </summary>
+    public SceneController SceneController { get; private set; }
+
+
+    /// <summary>
+    /// ゲームステートの参照
+    /// </summary>
+    public GameState gameState { get; set; } = GameState.Title;
+
+    /// <summary>
+    /// ゲームの状態
+    /// Title:タイトル
+    /// GameRedy:ゲーム開始前
+    /// GameNow:ゲーム中
+    /// GameOver:死亡後
+    /// Result:リザルト
+    /// Pause:ポーズ
+    /// Config:設定
+    /// </summary>
+    public enum GameState
     {
-        #region 公開変数
-        [SerializeField, Header("設定のUICanvas")]
-        private GameObject _configCanvas = default;
+        Title,
+        GameRedy,
+        GameNow,
+        GameOver,
+        Result,
+        Pause,
+        Config
+    };
 
-        /// <summary>
-        /// ゲームマネージャー自身を参照する変数
-        /// </summary>
-        public static GameManager instance { get; private set; }
+    [HideInInspector]// スコアの変数
+    public int _nowScore = 0;
 
-        /// <summary>
-        /// ボスキャラクターを管理するクラスの参照
-        /// </summary>
-        public BossManager BossManager { get; private set; }
+    #endregion
 
-        /// <summary>
-        /// SEManagerクラスの参照
-        /// </summary>
-        public SEManager SEManager { get; private set; }
+    #region プライベート変数
+    [SerializeField]
+    private KomaData _bossKomaDate1;
 
-        /// <summary>
-        /// シーン遷移を管理するクラスの参照
-        /// </summary>
-        public SceneController SceneController { get; private set; }
+    [SerializeField]
+    private KomaData _bossKomaDate2;
 
-
-        /// <summary>
-        /// ゲームステートの参照
-        /// </summary>
-        public GameState gameState { get; set; } = GameState.Title;
-
-        /// <summary>
-        /// ゲームの状態
-        /// Title:タイトル
-        /// GameRedy:ゲーム開始前
-        /// GameNow:ゲーム中
-        /// GameOver:死亡後
-        /// Result:リザルト
-        /// Pause:ポーズ
-        /// Config:設定
-        /// </summary>
-        public enum GameState
+    #endregion
+    private void Awake()
+    {
+        // GameManagerをシングルトンにする
+        if (instance == null)
         {
-            Title,
-            GameRedy,
-            GameNow,
-            GameOver,
-            Result,
-            Pause,
-            Config
-        };
-
-        [HideInInspector]// スコアの変数
-        public int _nowScore = 0;
-
-        #endregion
-
-        #region 
-        [SerializeField]
-        private KomaData _bossKomaDate0;
-
-        [SerializeField]
-        private KomaData _bossKomaDate1;
-
-        [SerializeField]
-        private KomaData _bossKomaDate2;
-
-        #endregion
-        private void Awake()
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
         {
-            // GameManagerをシングルトンにする
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(this.gameObject);
-            }
-            else
-            {
-                Destroy(this.gameObject);
-            }
-
-            // SEマネージャーを外部から参照しやすく
-            SEManager = transform.GetComponent<SEManager>();
-
-            BossManager = new BossManager(_bossKomaDate0, _bossKomaDate1, _bossKomaDate2);
-
-
+            Destroy(this.gameObject);
         }
 
-        private void Update()
-        {
-            // seManagerでUpdateしないためここで呼び出す
-            SEManager.CheckVolume();
-        }
+        // SEマネージャーを外部から参照しやすく
+        SEManager = transform.GetComponent<SEManager>();
 
-        /// <summary>
-        /// ゲームのプレイ状態を初期化する
-        /// </summary>
-        public void InitializeGame()
-        {
-            // ボスキャラクターの初期化
-            BossManager.BossInitialize();
+        BossManager = new BossManager(_bossKomaDate1, _bossKomaDate2);
 
-            // ゲームの状態をゲーム開始前にする
-            gameState = GameState.GameRedy;
+        //@
+        InitializeGame();
+    }
 
-            // スコアを初期化
-            _nowScore = 0;
-        }
+    private void Update()
+    {
+        // seManagerでUpdateしないためここで呼び出す
+        //@SEManager.CheckVolume();
+    }
 
-        /// <summary>
-        /// コンフィグキャンバスを表示
-        /// </summary>
-        public void CallConfigUI()
-        {
-            _configCanvas.SetActive(true);
-            gameState = GameState.Config;
-        }
+    /// <summary>
+    /// ゲームのプレイ状態を初期化する
+    /// </summary>
+    public void InitializeGame()
+    {
+        // ボスキャラクターの初期化
+        BossManager.BossInitialize();
 
-        /// <summary>
-        /// ゲームの終了
-        /// </summary>
-        public void OnExit()
-        {
+        // ゲームの状態をゲーム開始前にする
+        gameState = GameState.GameRedy;
+
+        // スコアを初期化
+        _nowScore = 0;
+    }
+
+    /// <summary>
+    /// コンフィグキャンバスを表示
+    /// </summary>
+    public void CallConfigUI()
+    {
+        _configCanvas.SetActive(true);
+        gameState = GameState.Config;
+    }
+
+    /// <summary>
+    /// ゲームの終了
+    /// </summary>
+    public void OnExit()
+    {
 #if UNITY_EDITOR
-            //エディターの時は再生をやめる
-            UnityEditor.EditorApplication.isPlaying = false;
+        //エディターの時は再生をやめる
+        UnityEditor.EditorApplication.isPlaying = false;
 #else
             //アプリケーションを終了する
             Application.Quit();
 #endif
-        }
     }
 }

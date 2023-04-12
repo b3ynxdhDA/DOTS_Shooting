@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace shooting
-{
     /// <summary>
     /// ゲームのSEを管理するクラス
     /// </summary>
@@ -83,4 +81,3 @@ namespace shooting
         }
         #endregion
     }
-}

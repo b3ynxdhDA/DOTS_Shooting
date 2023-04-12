@@ -452,7 +452,7 @@ MonoBehaviour:
   _straightBulletEntity: {fileID: 6885799998334693771, guid: 8b6b7aa85cf95a44e86cc5a1e86f666e, type: 3}
   _shootCoolTime: 0.1
   _shootInterval: 0.2
-  _bulletSpeed: 0
+  _bulletSpeed: 20
 --- !u!114 &747365187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,7 +545,7 @@ PrefabInstance:
     - target: {fileID: 8915979016316284305, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
       propertyPath: _bossKomaDate1
       value: 
-      objectReference: {fileID: 11400000, guid: 2bd25494b690c5b4c8d14db91be3b522, type: 2}
+      objectReference: {fileID: 11400000, guid: de559b9483941154980817a1934552f4, type: 2}
     - target: {fileID: 8915979016316284305, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
       propertyPath: _bossKomaDate2
       value: 
@@ -788,6 +788,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1010310398191113037, guid: dca878a4a03b1e64ca40414b62c177f9, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1010310398191113037, guid: dca878a4a03b1e64ca40414b62c177f9, type: 3}
       propertyPath: m_SortingLayerID
       value: 0
       objectReference: {fileID: 0}
@@ -910,6 +914,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1010310398191113037, guid: dca878a4a03b1e64ca40414b62c177f9, type: 3}
+      propertyPath: m_SortingOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1010310398191113037, guid: dca878a4a03b1e64ca40414b62c177f9, type: 3}
       propertyPath: m_SortingLayerID
       value: 0
       objectReference: {fileID: 0}
@@ -969,6 +977,14 @@ PrefabInstance:
     - target: {fileID: 4072516406997768910, guid: a7b0b629e6f153a4aae9c8e4996f6a2a, type: 3}
       propertyPath: m_Name
       value: BossEnemy_gyoku
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072516406997768945, guid: a7b0b629e6f153a4aae9c8e4996f6a2a, type: 3}
+      propertyPath: _bulletSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072516406997768946, guid: a7b0b629e6f153a4aae9c8e4996f6a2a, type: 3}
+      propertyPath: _enemyHp
+      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7b0b629e6f153a4aae9c8e4996f6a2a, type: 3}

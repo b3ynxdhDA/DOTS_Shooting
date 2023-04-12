@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace shooting
-{
     /// <summary>
     /// İ’è‰æ–Ê‚ğŠÇ—‚·‚éƒNƒ‰ƒX
     /// </summary>
@@ -208,4 +206,3 @@ namespace shooting
             this.gameObject.SetActive(false);
         }
     }
-}

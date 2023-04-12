@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 1216a350eb5143541a6b880b9aaa8be8, type: 3}
   hp: 50
-  shootKind: 0
+  shootKind: 2
   shootLine: 1
   bulletSpeed: 10
   shootCoolTime: 0.3

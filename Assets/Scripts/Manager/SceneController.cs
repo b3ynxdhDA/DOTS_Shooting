@@ -1,6 +1,5 @@
 using UnityEngine;
-namespace shooting
-{
+
     /// <summary>
     /// シーン切り替え時の処理をするクラス
     /// </summary>
@@ -14,4 +13,3 @@ namespace shooting
             GameManager.instance.InitializeGame();
         }
     }
-}
