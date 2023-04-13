@@ -73,7 +73,7 @@ public class BulletShootSystem : SystemBase
                             _moveDirection = localToWorld.Up
                         });
 
-                        // 弾の進む角度を設定
+                        // 弾の進む速度を設定
                         comandBuffer.SetComponent(instantiateEntity, new BulletTag
                         {
                             _bulletSpeed = gunporttag._bulletSpeed
@@ -109,13 +109,14 @@ public class BulletShootSystem : SystemBase
 
                         // 発射角を求めるための座標
                         float3 position = new float3(localPos.x + _SHOOT_RAD * math.cos(angle), localPos.y + _SHOOT_RAD * math.sin(angle), localPos.z);
+                        
                         // 発射源からみた座標の向き
                         float3 diff = math.normalizesafe(position - localToWorld.Position);
 
                         // 位置の初期化
                         comandBuffer.SetComponent(instantiateEntity, new Translation
                         {
-                            Value = localPos
+                            Value = localToWorld.Position
                         });
 
                         // 弾の向きを初期化
@@ -127,10 +128,11 @@ public class BulletShootSystem : SystemBase
                         // 弾の進む角度を設定
                         comandBuffer.SetComponent(instantiateEntity, new BulletMoveDirectionTag
                         {
-                            _moveDirection = localToWorld.Up
+                            // 横向きに進んでいたのでdiffのxとyを逆にして、yに駒ごとのlocalToWorldのyを掛けて向きを調整
+                            _moveDirection = new float3(diff.y, diff.x * math.sign(localToWorld.Up.y), diff.z)
                         });
 
-                        // 弾の進む角度を設定
+                        // 弾の進む速度を設定
                         comandBuffer.SetComponent(instantiateEntity, new BulletTag
                         {
                             _bulletSpeed = gunporttag._bulletSpeed
@@ -186,7 +188,7 @@ public class BulletShootSystem : SystemBase
                         _moveDirection = direction
                     });
 
-                    // 弾の進む角度を設定
+                    // 弾の進む速度を設定
                     comandBuffer.SetComponent(instantiateEntity, new BulletTag
                     {
                         _bulletSpeed = gunporttag._bulletSpeed

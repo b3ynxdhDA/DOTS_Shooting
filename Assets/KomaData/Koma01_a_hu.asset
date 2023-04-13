@@ -17,4 +17,4 @@ MonoBehaviour:
   shootKind: 0
   shootLine: 1
   bulletSpeed: 8
-  shootCoolTime: 0.2
+  shootCoolTime: 0.5

@@ -69,6 +69,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private KomaData _bossKomaDate2;
 
+    [SerializeField]
+    private KomaData _bossKomaDate3;
+
     #endregion
     private void Awake()
     {
@@ -86,7 +89,7 @@ public class GameManager : MonoBehaviour
         // SEマネージャーを外部から参照しやすく
         SEManager = transform.GetComponent<SEManager>();
 
-        BossManager = new BossManager(_bossKomaDate1, _bossKomaDate2);
+        BossManager = new BossManager(_bossKomaDate1, _bossKomaDate2, _bossKomaDate3);
 
         //@
         InitializeGame();

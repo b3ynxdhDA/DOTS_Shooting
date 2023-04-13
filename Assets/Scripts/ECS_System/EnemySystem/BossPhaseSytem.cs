@@ -6,6 +6,9 @@ public class BossPhaseSytem : SystemBase
     // 実行タイミングを管理しているシステムグループ
     private BeginSimulationEntityCommandBufferSystem _entityCommandBufferSystem;
 
+    // 第1段階の駒が設定されているか
+    private bool _isKomaInitialize　= false;
+
     // 定数宣言--------------------------------------------------------
 
 
@@ -18,13 +21,21 @@ public class BossPhaseSytem : SystemBase
 
     protected override void OnUpdate()
     {
+        // 各Managerを取得
         GameManager gameManager = GameManager.instance;
         BossManager bossManager = gameManager.BossManager;
+
+        // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
+        if (!_isKomaInitialize)
+        {
+            SetKomaDate(bossManager.BossKomaData1);
+            _isKomaInitialize = true;
+        }
 
         // ゲームのステートがゲーム中以外なら処理しない
         if (gameManager.gameState != GameManager.GameState.GameNow)
         {
-            //return;
+            //@ return;
         }
 
         Entities
@@ -37,18 +48,6 @@ public class BossPhaseSytem : SystemBase
                 switch (bossManager.BossPhaseCount)
                 {
                     // 第1段階
-                    case 0:
-                        // ボスのHPが0より小さくなったら
-                        if (enemyTag._enemyHp < 0)
-                        {
-                            // @次の駒をセットする
-                            SetKomaDate(bossManager.BossKomaData1);
-
-                            // ボスの攻撃段階を上げる
-                            bossManager.UpdateBossCount();
-                        }
-                        break;
-                    // 第2段階
                     case 1:
                         // ボスのHPが0より小さくなったら
                         if (enemyTag._enemyHp < 0)
@@ -60,8 +59,20 @@ public class BossPhaseSytem : SystemBase
                             bossManager.UpdateBossCount();
                         }
                         break;
-                    // 第3段階
+                    // 第2段階
                     case 2:
+                        // ボスのHPが0より小さくなったら
+                        if (enemyTag._enemyHp < 0)
+                        {
+                            // @次の駒をセットする
+                            SetKomaDate(bossManager.BossKomaData3);
+
+                            // ボスの攻撃段階を上げる
+                            bossManager.UpdateBossCount();
+                        }
+                        break;
+                    // 第3段階
+                    case 3:
                         // ボスのHPが0より小さくなったら
                         if (enemyTag._enemyHp < 0)
                         {
@@ -102,27 +113,40 @@ public class BossPhaseSytem : SystemBase
         // コマンドバッファを取得
         EntityCommandBuffer comandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
+        // 次にセットするGunPortの種類は何か
         switch (komaData.shootKind)
         {
             case KomaData.ShootKind.StraightGunPortTag:
+
+                // 既にあるGunPortの種別タグを削除する
                 comandBuffer.RemoveComponent<WideGunPortTag>(entity);
                 comandBuffer.RemoveComponent<AimGunPortTag>(entity);
+
+                // StraightGunPortTagを追加する
                 comandBuffer.AddComponent(entity, new StraightGunPortTag
                 {
                     _lines = komaData.shootLine
                 });
                 break;
             case KomaData.ShootKind.WideGunPortTag:
+
+                // 既にあるGunPortの種別タグを削除する
                 comandBuffer.RemoveComponent<StraightGunPortTag>(entity);
                 comandBuffer.RemoveComponent<AimGunPortTag>(entity);
+
+                // WideGunPortTagを追加する
                 comandBuffer.AddComponent(entity, new WideGunPortTag
                 {
                     _lines = komaData.shootLine
                 });
                 break;
             case KomaData.ShootKind.AimGunPortTag:
+
+                // 既にあるGunPortの種別タグを削除する
                 comandBuffer.RemoveComponent<StraightGunPortTag>(entity);
                 comandBuffer.RemoveComponent<WideGunPortTag>(entity);
+
+                // AimGunPortTagを追加する
                 comandBuffer.AddComponent(entity, new AimGunPortTag { });
                 break;
         }
