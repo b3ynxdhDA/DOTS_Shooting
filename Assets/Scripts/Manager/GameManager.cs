@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
 
     /// <summary>
+    /// プレイヤーを管理するクラスの参照
+    /// </summary>
+    public PlayerManager PlayerManager { get; private set; }
+
+    /// <summary>
     /// ボスキャラクターを管理するクラスの参照
     /// </summary>
     public BossManager BossManager { get; private set; }
@@ -63,13 +68,16 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region プライベート変数
-    [SerializeField]
+    [SerializeField, Header("プレイヤーの駒データ")]
+    private KomaData _playerKomadate;
+
+    [SerializeField, Header("ボスの第1段階の駒データ")]
     private KomaData _bossKomaDate1;
 
-    [SerializeField]
+    [SerializeField, Header("ボスの第2段階の駒データ")]
     private KomaData _bossKomaDate2;
 
-    [SerializeField]
+    [SerializeField, Header("ボスの第3段階の駒データ")]
     private KomaData _bossKomaDate3;
 
     #endregion
@@ -91,8 +99,11 @@ public class GameManager : MonoBehaviour
 
         BossManager = new BossManager(_bossKomaDate1, _bossKomaDate2, _bossKomaDate3);
 
+        PlayerManager = new PlayerManager(_playerKomadate);
         //@
         InitializeGame();
+
+        
     }
 
     private void Update()

@@ -28,14 +28,14 @@ public class BossPhaseSytem : SystemBase
         // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
         if (!_isKomaInitialize)
         {
-            SetKomaDate(bossManager.BossKomaData1);
+            SetBossKomaDate(bossManager.BossKomaData1);
             _isKomaInitialize = true;
         }
 
         // ゲームのステートがゲーム中以外なら処理しない
         if (gameManager.gameState != GameManager.GameState.GameNow)
         {
-            //@ return;
+            return;
         }
 
         Entities
@@ -53,7 +53,7 @@ public class BossPhaseSytem : SystemBase
                         if (enemyTag._enemyHp < 0)
                         {
                             // @次の駒をセットする
-                            SetKomaDate(bossManager.BossKomaData2);
+                            SetBossKomaDate(bossManager.BossKomaData2);
 
                             // ボスの攻撃段階を上げる
                             bossManager.UpdateBossCount();
@@ -65,7 +65,7 @@ public class BossPhaseSytem : SystemBase
                         if (enemyTag._enemyHp < 0)
                         {
                             // @次の駒をセットする
-                            SetKomaDate(bossManager.BossKomaData3);
+                            SetBossKomaDate(bossManager.BossKomaData3);
 
                             // ボスの攻撃段階を上げる
                             bossManager.UpdateBossCount();
@@ -76,7 +76,7 @@ public class BossPhaseSytem : SystemBase
                         // ボスのHPが0より小さくなったら
                         if (enemyTag._enemyHp < 0)
                         {
-
+                            gameManager.gameState = GameManager.GameState.Result;
                         }
                         break;
                 }
@@ -88,10 +88,10 @@ public class BossPhaseSytem : SystemBase
     }
 
     /// <summary>
-    /// 駒のステータスを設定する
+    /// ボスの駒のステータスを設定する
     /// </summary>
     /// <param name="komaData"></param>
-    private void SetKomaDate(KomaData komaData)
+    private void SetBossKomaDate(KomaData komaData)
     {
         Entities
            .WithName("Set_Boss_KomaDate")
@@ -108,6 +108,9 @@ public class BossPhaseSytem : SystemBase
                }).Run();
     }
 
+    /// <summary>
+    /// 射撃の種類のコンポーネントを設定する
+    /// </summary>
     private void SetShootKInd(Entity entity, KomaData komaData)
     {
         // コマンドバッファを取得

@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
         public void OnGameScene()
         {
             GameManager.instance.gameState = GameManager.GameState.GameRedy;
-            SceneManager.LoadScene("GameScene");
+            SceneManager.LoadScene("MainScene");
         }
 
         /// <summary>

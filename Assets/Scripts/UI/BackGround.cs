@@ -22,7 +22,7 @@ public class BackGround : MonoBehaviour
         // カメラの下端から完全に出たら、上端に移動
         if (transform.position.y < _LOWER)
         {
-            transform.position = new Vector3(transform.position.x, _TOP, 0);
+            transform.position = new Vector3(transform.position.x, _TOP, transform.position.z);
         }
     }
 }
