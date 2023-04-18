@@ -1,4 +1,7 @@
 using Unity.Entities;
+#if UNITY_EDITOR
+using UnityEngine;
+#endif
 
 /// <summary>
 /// ボスキャラクターを管理する
@@ -51,6 +54,7 @@ public class BossManager
     public void UpdateBossCount()
     {
         BossPhaseCount++;
+        Debug.Log("UP");
     }
 
     #endregion

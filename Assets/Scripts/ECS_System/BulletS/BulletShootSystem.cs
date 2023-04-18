@@ -34,6 +34,12 @@ public class BulletShootSystem : SystemBase
     /// </summary>
     protected override void OnUpdate()
     {
+        // ゲームのステートがゲーム中以外なら処理しない
+        if (GameManager.instance.gameState != GameManager.GameState.GameNow)
+        {
+            return;
+        }
+
         // コマンドバッファを取得
         EntityCommandBuffer comandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 

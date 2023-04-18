@@ -11,6 +11,12 @@ public class BulletMovementSystem : SystemBase
     /// </summary>
     protected override void OnUpdate()
     {
+        // ゲームのステートがゲーム中以外なら処理しない
+        if (GameManager.instance.gameState != GameManager.GameState.GameNow)
+        {
+            return;
+        }
+
         // 直前のフレームからの経過時間
         float deltaTime = Time.DeltaTime;
 
