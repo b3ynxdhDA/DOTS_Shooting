@@ -1216,6 +1216,10 @@ PrefabInstance:
       propertyPath: _configCanvas
       value: 
       objectReference: {fileID: 99514417}
+    - target: {fileID: 8915979016316284305, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
+      propertyPath: _playerKomadate
+      value: 
+      objectReference: {fileID: 11400000, guid: fd5b0e7a656eb204f8a7a44651219437, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
 --- !u!1 &2107160614

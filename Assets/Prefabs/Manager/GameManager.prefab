@@ -47,7 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _configCanvas: {fileID: 1200619586308441919, guid: 7765cb6ae060398479ed7af0b18b8f05, type: 3}
   _nowScore: 0
-  _playerKomadate: {fileID: 11400000, guid: 9e47073bc55b5f0469d3d54e8c42f8c8, type: 2}
+  _playerKomadate: {fileID: 11400000, guid: fd5b0e7a656eb204f8a7a44651219437, type: 2}
   _bossKomaDate1: {fileID: 11400000, guid: 2bd25494b690c5b4c8d14db91be3b522, type: 2}
   _bossKomaDate2: {fileID: 11400000, guid: de559b9483941154980817a1934552f4, type: 2}
   _bossKomaDate3: {fileID: 11400000, guid: 107d5ba0a2e6d9244904d161ba9dc299, type: 2}

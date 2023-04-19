@@ -16,5 +16,5 @@ MonoBehaviour:
   hp: 20
   shootKind: 0
   shootLine: 1
-  bulletSpeed: 8
+  bulletSpeed: 4
   shootCoolTime: 0.5

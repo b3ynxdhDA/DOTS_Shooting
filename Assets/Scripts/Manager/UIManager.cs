@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     // 変数宣言--------------------------
-    private bool _isCallGameOver = false;
     // タイマー
     private float _timerCount = 0;
 
@@ -17,7 +16,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Text _startCountText = default;
 
     // ゲームオーバーテキスト
-    [SerializeField] private GameObject _gameOverText = default;
+    [SerializeField] private GameObject _gameFinishText = default;
 
     // リザルトテキスト
     [SerializeField] private GameObject _resultUI = default;
@@ -38,16 +37,21 @@ public class UIManager : MonoBehaviour
     // ゲームオーバーテキストの移動後のY座標
     const float _GAMEOVER_TEXT_POSITION_Y = 0;
 
+    // ゲームクリア時に表示するテキスト
+    const string _CLEAR_TEXT = "!! GAME CLEAR !!";
+
+    // ゲームオーバー時に表示するテキスト
+    const string _DEFEAT_TEXT = "GAME OVER";
+
     private void Start()
     {
-        // ゲームの状態をゲーム中に
-        GameManager.instance.gameState = GameManager.GameState.GameRedy;
-
         // ゲームスタートのカウントダウンを開始
         StartCoroutine("CountdownCoroutine");
 
         // タイムスケールの初期化
         Time.timeScale = _SEFAULT_TIMESCALE;
+
+        GameManager.instance.InitializeGame();
     }
     private void Update()
     {
@@ -65,13 +69,16 @@ public class UIManager : MonoBehaviour
             //_timerCount -= Time.deltaTime;
             //_timerCountText.text = "" + ((int)_timerCount / _ONE_MINUTES).ToString("00") + " : " + ((int)_timerCount % _ONE_MINUTES).ToString("00");
 
-            // ゲームステートがゲームオーバーで、ゲームオーバーコルーチンを呼んでいないなら
-            if (GameManager.instance.gameState == GameManager.GameState.GameOver && !_isCallGameOver)
-            {
-                StartCoroutine("GameOver");
-                _isCallGameOver = true;
-            }
         }
+    }
+
+    /// <summary>
+    /// ゲーム終了時のコルーチンを外部から呼ぶメソッド
+    /// </summary>
+    /// <param name="clear">true:ゲームクリア,false:ゲームオーバー</param>
+    public void CallGameFinish(bool clear)
+    {
+        StartCoroutine("GameFinish", clear);
     }
 
     /// <summary>
@@ -103,21 +110,31 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ゲームオーバーしてからリザルトまでの処理
+    /// ゲーム終了時のテキストを呼ぶコルーチン
     /// </summary>
     /// <returns></returns>
-    IEnumerator GameOver()
+    IEnumerator GameFinish(bool isClear)
     {
         // ゲームステートをGameOverに
-        GameManager.instance.gameState = GameManager.GameState.GameOver;
+        GameManager.instance.gameState = GameManager.GameState.GameFinish;
 
-        _gameOverText.SetActive(true);
+        _gameFinishText.SetActive(true);
+
+        // クリアによる遷移か敗北による遷移か
+        if (isClear)
+        {
+            _gameFinishText.GetComponent<Text>().text = _CLEAR_TEXT;
+        }
+        else
+        {
+            _gameFinishText.GetComponent<Text>().text = _DEFEAT_TEXT;
+        }
 
         // ゲームオーバーテキストのポジションが0より大きい間
-        while (_GAMEOVER_TEXT_POSITION_Y < _gameOverText.transform.localPosition.y)
+        while (_GAMEOVER_TEXT_POSITION_Y < _gameFinishText.transform.localPosition.y)
         {
             // ゲームオーバーテキストのポジションを下げる
-            _gameOverText.transform.localPosition += Vector3.down * 10;
+            _gameFinishText.transform.localPosition += Vector3.down * 10;
             yield return new WaitForSeconds(0.001f);
         }
 
@@ -126,6 +143,9 @@ public class UIManager : MonoBehaviour
         // ゲームステートをResultに
         GameManager.instance.gameState = GameManager.GameState.Result;
 
+
+        _gameFinishText.SetActive(false);
         _resultUI.SetActive(true);
+        
     }
 }

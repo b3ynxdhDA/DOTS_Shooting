@@ -31,10 +31,9 @@ public class GameManager : MonoBehaviour
     public SEManager SEManager { get; private set; }
 
     /// <summary>
-    /// シーン遷移を管理するクラスの参照
+    /// UIManagerクラスの参照
     /// </summary>
-    public SceneController SceneController { get; private set; }
-
+    public UIManager UIManager { get; private set; }
 
     /// <summary>
     /// ゲームステートの参照
@@ -46,17 +45,18 @@ public class GameManager : MonoBehaviour
     /// Title:タイトル
     /// GameRedy:ゲーム開始前
     /// GameNow:ゲーム中
-    /// GameOver:死亡後
+    /// GameFinish:ゲーム終了
     /// Result:リザルト
     /// Pause:ポーズ
     /// Config:設定
+    /// GameFinish:ゲーム終了からリザルト表示までの間
     /// </summary>
     public enum GameState
     {
         Title,
         GameRedy,
         GameNow,
-        GameOver,
+        GameFinish,
         Result,
         Pause,
         Config
@@ -100,10 +100,7 @@ public class GameManager : MonoBehaviour
         BossManager = new BossManager(_bossKomaDate1, _bossKomaDate2, _bossKomaDate3);
 
         PlayerManager = new PlayerManager(_playerKomadate);
-        //@
-        InitializeGame();
 
-        
     }
 
     private void Update()
@@ -117,6 +114,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void InitializeGame()
     {
+        // メインゲームシーンのUIManagerを取得
+        // DOTSによってGameObjectが少ないのでFindを使用
+        UIManager = GameObject.Find("GameCanvas").GetComponent<UIManager>();
+        
         // ボスキャラクターの初期化
         BossManager.BossInitialize();
 

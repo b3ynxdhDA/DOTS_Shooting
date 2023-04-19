@@ -76,7 +76,7 @@ public class BossPhaseSytem : SystemBase
                         // É{ÉXÇÃHPÇ™0ÇÊÇËè¨Ç≥Ç≠Ç»Ç¡ÇΩÇÁ
                         if (enemyTag._enemyHp < 0)
                         {
-                            gameManager.gameState = GameManager.GameState.Result;
+                            gameManager.UIManager.CallGameFinish(true);
                         }
                         break;
                 }
