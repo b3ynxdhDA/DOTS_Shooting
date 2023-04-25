@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
     {
         // seManagerでUpdateしないためここで呼び出す
         //@SEManager.CheckVolume();
+        print(gameState);
     }
 
     /// <summary>

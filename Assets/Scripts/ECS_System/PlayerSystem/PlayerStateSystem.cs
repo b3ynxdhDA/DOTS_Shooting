@@ -45,10 +45,10 @@ public class PlayerStateSystem : SystemBase
             .WithoutBurst()
             .ForEach((Entity entity, ref PlayerTag playerTag, ref GunPortTag gunPortTag) =>
             {
-                    SetPlayerKomaDate(entity, playerTag, gunPortTag, playerManager.PlayerKomaData);
                 // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
                 if (!_isKomaInitialize)
                 {
+                    SetPlayerKomaDate(entity, playerTag, gunPortTag, playerManager.PlayerKomaData);
                     _isKomaInitialize = true;
                 }
 

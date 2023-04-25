@@ -11,11 +11,11 @@ public struct GunPortTag : IComponentData
     public Entity _straightBulletEntity;
 
     // 連射の間隔
-    public float _shootCoolTime;
+    [HideInInspector] public float _shootCoolTime;
 
     // 連射のクールタイム(発射地点ごとに連射のクールタイムを変えるためTagが保持する)
     [HideInInspector] public float _shootInterval;
 
     // 発射する弾の速度
-    public float _bulletSpeed;
+    [HideInInspector] public float _bulletSpeed;
 }

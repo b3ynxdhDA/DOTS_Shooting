@@ -78,7 +78,11 @@ public class UIManager : MonoBehaviour
     /// <param name="clear">true:ゲームクリア,false:ゲームオーバー</param>
     public void CallGameFinish(bool clear)
     {
-        StartCoroutine("GameFinish", clear);
+        // ゲーム中からしか遷移しない
+        if (GameManager.instance.gameState == GameManager.GameState.GameNow)
+        {
+            StartCoroutine("GameFinish", clear);
+        }
     }
 
     /// <summary>
@@ -115,6 +119,7 @@ public class UIManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator GameFinish(bool isClear)
     {
+        print("GAMEfinish");
         // ゲームステートをGameOverに
         GameManager.instance.gameState = GameManager.GameState.GameFinish;
 

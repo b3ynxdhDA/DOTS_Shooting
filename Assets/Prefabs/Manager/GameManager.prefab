@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6184526737222521596}
   - component: {fileID: 8915979016316284305}
+  - component: {fileID: 7612213932444139971}
   - component: {fileID: 4429697775210250949}
   - component: {fileID: 413296009493495641}
   m_Layer: 0
@@ -51,6 +52,18 @@ MonoBehaviour:
   _bossKomaDate1: {fileID: 11400000, guid: 2bd25494b690c5b4c8d14db91be3b522, type: 2}
   _bossKomaDate2: {fileID: 11400000, guid: de559b9483941154980817a1934552f4, type: 2}
   _bossKomaDate3: {fileID: 11400000, guid: 107d5ba0a2e6d9244904d161ba9dc299, type: 2}
+--- !u!114 &7612213932444139971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677681601453861856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 710ea0a6e38e2ec4f9d1bed705705da2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4429697775210250949
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,9 +100,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
