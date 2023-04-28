@@ -11,8 +11,6 @@ public class PlayerStateSystem : SystemBase
     // 実行タイミングを管理しているシステムグループ
     private EndSimulationEntityCommandBufferSystem _entityCommandBufferSystem;
 
-    // プレイヤーの駒が初期化されているか
-    private bool _isKomaInitialize = false;
 
     // 定数宣言--------------------------------------------------------
 
@@ -46,10 +44,10 @@ public class PlayerStateSystem : SystemBase
             .ForEach((Entity entity, ref PlayerTag playerTag, ref GunPortTag gunPortTag) =>
             {
                 // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
-                if (!_isKomaInitialize)
+                if (!playerManager.GetSetIsPlayerInitialize)
                 {
-                    SetPlayerKomaDate(entity, playerTag, gunPortTag, playerManager.PlayerKomaData);
-                    _isKomaInitialize = true;
+                    SetPlayerKomaDate(entity, ref playerTag, ref gunPortTag, playerManager.PlayerKomaData);
+                    playerManager.GetSetIsPlayerInitialize = true;
                 }
 
                 // プレイヤーのHPが0以下なら消す
@@ -68,35 +66,28 @@ public class PlayerStateSystem : SystemBase
     /// <summary>
     /// プレイヤーの駒データをセットする
     /// </summary>
-    private void SetPlayerKomaDate(Entity entity, PlayerTag playerTag, GunPortTag gunPortTag, KomaData komaData)
+    private void SetPlayerKomaDate(Entity entity, ref PlayerTag playerTag, ref GunPortTag gunPortTag, KomaData komaData)
     {
+        // コマンドバッファを取得
+        EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
+        // プレイヤーの基礎ステータスを設定する
         playerTag._playerHp = komaData.hp;
         gunPortTag._shootCoolTime = komaData.shootCoolTime;
         gunPortTag._bulletSpeed = komaData.bulletSpeed;
 
-        SetShootKInd(entity, komaData);
-    }
-
-    /// <summary>
-    /// 射撃の種類のコンポーネントを設定する
-    /// </summary>
-    private void SetShootKInd(Entity entity, KomaData komaData)
-    {
-        // コマンドバッファを取得
-        EntityCommandBuffer comandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
-
+        // 射撃の種類のコンポーネントを設定する
         // 次にセットするGunPortの種類は何か
         switch (komaData.shootKind)
         {
             case KomaData.ShootKind.StraightGunPortTag:
 
                 // 既にあるGunPortの種別タグを削除する
-                comandBuffer.RemoveComponent<WideGunPortTag>(entity);
-                comandBuffer.RemoveComponent<AimGunPortTag>(entity);
+                commandBuffer.RemoveComponent<WideGunPortTag>(entity);
+                commandBuffer.RemoveComponent<AimGunPortTag>(entity);
 
                 // StraightGunPortTagを追加する
-                comandBuffer.AddComponent(entity, new StraightGunPortTag
+                commandBuffer.AddComponent(entity, new StraightGunPortTag
                 {
                     _lines = komaData.shootLine
                 });
@@ -104,11 +95,11 @@ public class PlayerStateSystem : SystemBase
             case KomaData.ShootKind.WideGunPortTag:
 
                 // 既にあるGunPortの種別タグを削除する
-                comandBuffer.RemoveComponent<StraightGunPortTag>(entity);
-                comandBuffer.RemoveComponent<AimGunPortTag>(entity);
+                commandBuffer.RemoveComponent<StraightGunPortTag>(entity);
+                commandBuffer.RemoveComponent<AimGunPortTag>(entity);
 
                 // WideGunPortTagを追加する
-                comandBuffer.AddComponent(entity, new WideGunPortTag
+                commandBuffer.AddComponent(entity, new WideGunPortTag
                 {
                     _lines = komaData.shootLine
                 });
@@ -116,13 +107,12 @@ public class PlayerStateSystem : SystemBase
             case KomaData.ShootKind.AimGunPortTag:
 
                 // 既にあるGunPortの種別タグを削除する
-                comandBuffer.RemoveComponent<StraightGunPortTag>(entity);
-                comandBuffer.RemoveComponent<WideGunPortTag>(entity);
+                commandBuffer.RemoveComponent<StraightGunPortTag>(entity);
+                commandBuffer.RemoveComponent<WideGunPortTag>(entity);
 
                 // AimGunPortTagを追加する
-                comandBuffer.AddComponent(entity, new AimGunPortTag { });
+                commandBuffer.AddComponent(entity, new AimGunPortTag { });
                 break;
         }
-
     }
 }

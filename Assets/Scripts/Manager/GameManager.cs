@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+using Unity.Entities;
 
 /// <summary>
 /// ゲーム全体の状態を管理するクラス
@@ -97,8 +97,10 @@ public class GameManager : MonoBehaviour
         // SEマネージャーを外部から参照しやすく
         SEManager = transform.GetComponent<SEManager>();
 
+        // BossManagerにボスの駒データを渡す
         BossManager = new BossManager(_bossKomaDate1, _bossKomaDate2, _bossKomaDate3);
 
+        // PlayerManagerにプレイヤーの駒データを渡す
         PlayerManager = new PlayerManager(_playerKomadate);
 
     }
@@ -106,7 +108,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         // seManagerでUpdateしないためここで呼び出す
-        //@SEManager.CheckVolume();
+        SEManager.CheckVolume();
         print(gameState);
     }
 
@@ -122,11 +124,25 @@ public class GameManager : MonoBehaviour
         // ボスキャラクターの初期化
         BossManager.BossInitialize();
 
+        // プレイヤーの初期化
+        PlayerManager.PlayerInitialize();
+
         // ゲームの状態をゲーム開始前にする
         gameState = GameState.GameRedy;
 
         // スコアを初期化
         _nowScore = 0;
+    }
+
+    /// <summary>
+    /// エンティティを全て削除する
+    /// </summary>
+    public void EntityIntialize()
+    {
+        EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
+        entityManager.DestroyEntity(entityManager.GetAllEntities());
+            
     }
 
     /// <summary>

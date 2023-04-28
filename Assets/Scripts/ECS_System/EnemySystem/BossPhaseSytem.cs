@@ -6,8 +6,6 @@ public class BossPhaseSytem : SystemBase
     // 実行タイミングを管理しているシステムグループ
     private BeginSimulationEntityCommandBufferSystem _entityCommandBufferSystem;
 
-    // 第1段階の駒が設定されているか
-    private bool _isKomaInitialize　= false;
 
     // 定数宣言--------------------------------------------------------
 
@@ -26,10 +24,10 @@ public class BossPhaseSytem : SystemBase
         BossManager bossManager = gameManager.BossManager;
 
         // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
-        if (!_isKomaInitialize)
+        if (!bossManager.IsBossKomaInitialize)
         {
             SetBossKomaDate(bossManager.BossKomaData1);
-            _isKomaInitialize = true;
+            bossManager.IsBossKomaInitialize = true;
         }
 
         // ゲームのステートがゲーム中以外なら処理しない
@@ -115,6 +113,9 @@ public class BossPhaseSytem : SystemBase
     {
         // コマンドバッファを取得
         EntityCommandBuffer comandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
+
+        //comandBuffer.SetComponent<>
+
 
         // 次にセットするGunPortの種類は何か
         switch (komaData.shootKind)

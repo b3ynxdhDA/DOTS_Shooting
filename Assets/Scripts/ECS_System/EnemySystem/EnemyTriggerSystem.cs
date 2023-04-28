@@ -42,6 +42,7 @@ public class EnemyTriggerSystem : SystemBase
         EnemyTriggerJob enemyTriggerJob = new EnemyTriggerJob();
         enemyTriggerJob.EnemyEntity = GetComponentDataFromEntity<EnemyTag>(true);
         enemyTriggerJob.PlayerBulletsEntity = GetComponentDataFromEntity<PlayerBulletTag>(true);
+        enemyTriggerJob.PlayerEntity = GetComponentDataFromEntity<PlayerTag>(true);
         enemyTriggerJob.entityCommandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
         // ジョブの実行
@@ -61,6 +62,8 @@ public class EnemyTriggerSystem : SystemBase
         [ReadOnly] public ComponentDataFromEntity<EnemyTag> EnemyEntity;
         // プレイヤーの弾のエンティティを取得
         [ReadOnly] public ComponentDataFromEntity<PlayerBulletTag> PlayerBulletsEntity;
+        // プレイヤーのエンティティを取得
+        [ReadOnly] public ComponentDataFromEntity<PlayerTag> PlayerEntity;
 
         public EntityCommandBuffer entityCommandBuffer;
 
@@ -100,6 +103,13 @@ public class EnemyTriggerSystem : SystemBase
                 {
                     _enemyHp = EnemyEntity[entityB]._enemyHp - HIT_DAMAGE
                 });
+            }
+            // 敵とプレイヤーが接触した場合の処理はPlayerTriggerSystemにある
+            else if (EnemyEntity.HasComponent(entityA) && PlayerEntity.HasComponent(entityB))
+            {
+            }
+            else if (PlayerEntity.HasComponent(entityA) && EnemyEntity.HasComponent(entityB))
+            {
             }
         }
     }

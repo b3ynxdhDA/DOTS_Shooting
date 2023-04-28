@@ -1,7 +1,4 @@
 using Unity.Entities;
-#if UNITY_EDITOR
-using UnityEngine;
-#endif
 
 /// <summary>
 /// ボスキャラクターを管理する
@@ -9,6 +6,16 @@ using UnityEngine;
 public class BossManager
 {
     #region 変数宣言
+
+
+    // 第1段階の駒が設定されているか
+    private bool _isBossInitialize = false;
+
+    // ボスキャラクターの状態が何段階目か
+    private int _bossPhaseCount;
+    #endregion
+
+    #region プロパティ
     /// <summary>
     /// 第1段階のボスの駒データ
     /// </summary>
@@ -25,7 +32,12 @@ public class BossManager
     /// <summary>
     /// ボスキャラクターの状態が何段階目か
     /// </summary>
-    public int BossPhaseCount { get; private set; }
+    public int BossPhaseCount { get { return _bossPhaseCount; }}
+
+    /// <summary>
+    /// 第1段階の駒が設定されているか
+    /// </summary>
+    public bool IsBossKomaInitialize { get { return _isBossInitialize; } set { _isBossInitialize = value; } }
 
     #endregion
 
@@ -44,8 +56,8 @@ public class BossManager
     }
     public void BossInitialize()
     {
-        BossPhaseCount = 1;
-
+        _bossPhaseCount = 1;
+        _isBossInitialize = false;
     }
 
     /// <summary>
@@ -53,8 +65,7 @@ public class BossManager
     /// </summary>
     public void UpdateBossCount()
     {
-        BossPhaseCount++;
-        Debug.Log("UP");
+        _bossPhaseCount++;
     }
 
     #endregion

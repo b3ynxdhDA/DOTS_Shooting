@@ -1126,6 +1126,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BossEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4072516406997768944, guid: a7b0b629e6f153a4aae9c8e4996f6a2a, type: 3}
+      propertyPath: Values.Array.data[1].x
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4072516406997768944, guid: a7b0b629e6f153a4aae9c8e4996f6a2a, type: 3}
+      propertyPath: Values.Array.data[2].x
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4072516406997768945, guid: a7b0b629e6f153a4aae9c8e4996f6a2a, type: 3}
       propertyPath: _bulletSpeed
       value: 10
