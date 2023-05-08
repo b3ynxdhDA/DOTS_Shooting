@@ -6,7 +6,7 @@ public class KomaData : ScriptableObject
     /// <summary>
     /// 駒の見た目のスプライト
     /// </summary>
-    public Sprite sprite;
+    public Material material;
 
     /// <summary>
     /// 駒の体力

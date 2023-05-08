@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b163d3934214940bed875526b94b19, type: 3}
   m_Name: Koma04_b_narigin
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 632f1b0e87add4f4b941b31abf8423e1, type: 3}
+  material: {fileID: 2100000, guid: 68ba621a0b9af094fbf8f32ff028d18b, type: 2}
   hp: 50
   shootKind: 2
   shootLine: 2

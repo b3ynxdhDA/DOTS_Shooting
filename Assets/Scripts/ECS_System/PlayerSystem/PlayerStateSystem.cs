@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Entities;
 using Unity.Transforms;
+using Unity.Rendering;
 
 /// <summary>
 /// プレイヤーの状態をみるシステム
@@ -75,6 +76,13 @@ public class PlayerStateSystem : SystemBase
         playerTag._playerHp = komaData.hp;
         gunPortTag._shootCoolTime = komaData.shootCoolTime;
         gunPortTag._bulletSpeed = komaData.bulletSpeed;
+
+        // マテリアルを変更
+        commandBuffer.SetSharedComponent(entity, new RenderMesh
+        {
+            mesh = GameManager.instance.Quad,
+            material = komaData.material
+        });
 
         // 射撃の種類のコンポーネントを設定する
         // 次にセットするGunPortの種類は何か

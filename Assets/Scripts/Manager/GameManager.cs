@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     [SerializeField, Header("設定のUICanvas")]
     private GameObject _configCanvas = default;
 
+    [SerializeField, Header("駒のメッシュ")] 
+    public Mesh Quad;
+
     /// <summary>
     /// ゲームマネージャー自身を参照する変数
     /// </summary>
@@ -39,6 +42,7 @@ public class GameManager : MonoBehaviour
     /// ゲームステートの参照
     /// </summary>
     public GameState gameState { get; set; } = GameState.Title;
+
 
     /// <summary>
     /// ゲームの状態

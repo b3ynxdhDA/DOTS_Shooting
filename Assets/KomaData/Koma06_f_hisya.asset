@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b163d3934214940bed875526b94b19, type: 3}
-  m_Name: Koma01_a_hu
+  m_Name: Koma06_f_hisya
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: d6e78525572ed3246a5ccad3a31d0330, type: 3}
-  hp: 20
+  material: {fileID: 2100000, guid: 3f3ea6b6e31ccc2448400f33ab69b311, type: 2}
+  hp: 100
   shootKind: 0
-  shootLine: 1
-  bulletSpeed: 4
-  shootCoolTime: 0.5
+  shootLine: 2
+  bulletSpeed: 20
+  shootCoolTime: 0.25

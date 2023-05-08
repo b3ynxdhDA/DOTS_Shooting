@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b163d3934214940bed875526b94b19, type: 3}
-  m_Name: Koma07_a_kakugyou
+  m_Name: Koma08_b_gyokusyou
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 955a7ca6ee697f243a9547253112c11d, type: 3}
-  hp: 100
-  shootKind: 1
-  shootLine: 2
-  bulletSpeed: 15
+  material: {fileID: 2100000, guid: 17a00e89ce68e194ba6437490038ccbe, type: 2}
+  hp: 200
+  shootKind: 2
+  shootLine: 3
+  bulletSpeed: 20
   shootCoolTime: 0.2

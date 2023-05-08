@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b163d3934214940bed875526b94b19, type: 3}
   m_Name: Koma07_b_ryuma
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 7bcdc50bb0812ae4e9a6668843195a6a, type: 3}
+  material: {fileID: 2100000, guid: 985c6ef3698dddf4590403b63edc06cd, type: 2}
   hp: 150
   shootKind: 1
   shootLine: 4

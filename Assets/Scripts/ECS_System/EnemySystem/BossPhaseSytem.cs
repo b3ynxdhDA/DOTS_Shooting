@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Rendering;
 
 public class BossPhaseSytem : SystemBase
 {
@@ -112,10 +113,14 @@ public class BossPhaseSytem : SystemBase
     private void SetShootKInd(Entity entity, KomaData komaData)
     {
         // コマンドバッファを取得
-        EntityCommandBuffer comandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
+        EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
-        //comandBuffer.SetComponent<>
-
+        // マテリアルを変更
+        commandBuffer.SetSharedComponent(entity, new RenderMesh
+        {
+            mesh = GameManager.instance.Quad,
+            material = komaData.material
+        });
 
         // 次にセットするGunPortの種類は何か
         switch (komaData.shootKind)
@@ -123,11 +128,11 @@ public class BossPhaseSytem : SystemBase
             case KomaData.ShootKind.StraightGunPortTag:
 
                 // 既にあるGunPortの種別タグを削除する
-                comandBuffer.RemoveComponent<WideGunPortTag>(entity);
-                comandBuffer.RemoveComponent<AimGunPortTag>(entity);
+                commandBuffer.RemoveComponent<WideGunPortTag>(entity);
+                commandBuffer.RemoveComponent<AimGunPortTag>(entity);
 
                 // StraightGunPortTagを追加する
-                comandBuffer.AddComponent(entity, new StraightGunPortTag
+                commandBuffer.AddComponent(entity, new StraightGunPortTag
                 {
                     _lines = komaData.shootLine
                 });
@@ -135,11 +140,11 @@ public class BossPhaseSytem : SystemBase
             case KomaData.ShootKind.WideGunPortTag:
 
                 // 既にあるGunPortの種別タグを削除する
-                comandBuffer.RemoveComponent<StraightGunPortTag>(entity);
-                comandBuffer.RemoveComponent<AimGunPortTag>(entity);
+                commandBuffer.RemoveComponent<StraightGunPortTag>(entity);
+                commandBuffer.RemoveComponent<AimGunPortTag>(entity);
 
                 // WideGunPortTagを追加する
-                comandBuffer.AddComponent(entity, new WideGunPortTag
+                commandBuffer.AddComponent(entity, new WideGunPortTag
                 {
                     _lines = komaData.shootLine
                 });
@@ -147,11 +152,11 @@ public class BossPhaseSytem : SystemBase
             case KomaData.ShootKind.AimGunPortTag:
 
                 // 既にあるGunPortの種別タグを削除する
-                comandBuffer.RemoveComponent<StraightGunPortTag>(entity);
-                comandBuffer.RemoveComponent<WideGunPortTag>(entity);
+                commandBuffer.RemoveComponent<StraightGunPortTag>(entity);
+                commandBuffer.RemoveComponent<WideGunPortTag>(entity);
 
                 // AimGunPortTagを追加する
-                comandBuffer.AddComponent(entity, new AimGunPortTag { });
+                commandBuffer.AddComponent(entity, new AimGunPortTag { });
                 break;
         }
 

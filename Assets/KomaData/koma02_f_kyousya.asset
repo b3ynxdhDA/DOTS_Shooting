@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9b163d3934214940bed875526b94b19, type: 3}
-  m_Name: Koma01_b_tokin
+  m_Name: koma02_f_kyousya
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: c0e080cf1ed0cc5448a1fac2c0927fc3, type: 2}
-  hp: 50
+  material: {fileID: 2100000, guid: 72fbf754a52e74647bb091197befc55b, type: 2}
+  hp: 30
   shootKind: 0
-  shootLine: 2
-  bulletSpeed: 8
-  shootCoolTime: 0.1
+  shootLine: 1
+  bulletSpeed: 30
+  shootCoolTime: 0.2
