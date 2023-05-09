@@ -4,9 +4,5 @@ using Unity.Entities;
 /// 敵のコンポーネントタグ
 /// </summary>
 [GenerateAuthoringComponent]
-public struct EnemyTag : IComponentData
-{
-    // 敵の体力
-    public float _enemyHp;
+public struct EnemyTag : IComponentData { }
 
-}

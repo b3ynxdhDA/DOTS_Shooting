@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ステージやそのUIを管理するクラス
+/// ステージのUIを管理するクラス
 /// </summary>
 public class UIManager : MonoBehaviour
 {
@@ -12,14 +12,17 @@ public class UIManager : MonoBehaviour
     private float _timerCount = 0;
 
     // テキストオブジェクト---------------------------
-    // ゲームスタートのカウント
-    [SerializeField] private Text _startCountText = default;
+    // リザルトテキスト
+    [SerializeField] private GameObject _resultUI = default;
+    
+    // ボスの体力バー
+    [SerializeField] private Slider _bossHpSlider = default;
 
     // ゲームオーバーテキスト
     [SerializeField] private GameObject _gameFinishText = default;
 
-    // リザルトテキスト
-    [SerializeField] private GameObject _resultUI = default;
+    // ゲームスタートのカウント
+    [SerializeField] private Text _startCountText = default;
 
     // ハイスコアテキスト
     [SerializeField] private Text _scoreCountText = default;
@@ -119,7 +122,6 @@ public class UIManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator GameFinish(bool isClear)
     {
-        print("GAMEfinish");
         // ゲームステートをGameOverに
         GameManager.instance.gameState = GameManager.GameState.GameFinish;
 

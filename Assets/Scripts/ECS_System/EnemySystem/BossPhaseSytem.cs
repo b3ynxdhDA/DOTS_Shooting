@@ -24,12 +24,6 @@ public class BossPhaseSytem : SystemBase
         GameManager gameManager = GameManager.instance;
         BossManager bossManager = gameManager.BossManager;
 
-        // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
-        if (!bossManager.IsBossKomaInitialize)
-        {
-            SetBossKomaDate(bossManager.BossKomaData1);
-            bossManager.IsBossKomaInitialize = true;
-        }
 
         // ゲームのステートがゲーム中以外なら処理しない
         if (gameManager.gameState != GameManager.GameState.GameNow)
@@ -41,18 +35,24 @@ public class BossPhaseSytem : SystemBase
             .WithName("Boss_Phase")
             .WithAll<EnemyTag, BossEnemyTag>()
             .WithoutBurst()
-            .ForEach((in EnemyTag enemyTag) =>
+            .ForEach((Entity entity, ref HPTag hpTag, ref GunPortTag gunPortTag) =>
             {
+        // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
+        if (!bossManager.IsBossKomaInitialize)
+        {
+            SetBossKomaDate(entity, ref hpTag, ref gunPortTag, bossManager.BossKomaData1);
+            bossManager.IsBossKomaInitialize = true;
+        }
                 // 現在のボスの攻撃段階に合わせた処理をする
                 switch (bossManager.BossPhaseCount)
                 {
                     // 第1段階
                     case 1:
                         // ボスのHPが0より小さくなったら
-                        if (enemyTag._enemyHp < 0)
+                        if (hpTag._hp < 0)
                         {
                             // @次の駒をセットする
-                            SetBossKomaDate(bossManager.BossKomaData2);
+                            SetBossKomaDate(entity, ref hpTag, ref gunPortTag, bossManager.BossKomaData2);
 
                             // ボスの攻撃段階を上げる
                             bossManager.UpdateBossCount();
@@ -61,10 +61,10 @@ public class BossPhaseSytem : SystemBase
                     // 第2段階
                     case 2:
                         // ボスのHPが0より小さくなったら
-                        if (enemyTag._enemyHp < 0)
+                        if (hpTag._hp < 0)
                         {
                             // @次の駒をセットする
-                            SetBossKomaDate(bossManager.BossKomaData3);
+                            SetBossKomaDate(entity, ref hpTag, ref gunPortTag, bossManager.BossKomaData3);
 
                             // ボスの攻撃段階を上げる
                             bossManager.UpdateBossCount();
@@ -73,7 +73,7 @@ public class BossPhaseSytem : SystemBase
                     // 第3段階
                     case 3:
                         // ボスのHPが0より小さくなったら
-                        if (enemyTag._enemyHp < 0)
+                        if (hpTag._hp < 0)
                         {
                             gameManager.UIManager.CallGameFinish(true);
                         }
@@ -90,30 +90,15 @@ public class BossPhaseSytem : SystemBase
     /// ボスの駒のステータスを設定する
     /// </summary>
     /// <param name="komaData"></param>
-    private void SetBossKomaDate(KomaData komaData)
-    {
-        Entities
-           .WithName("Set_Boss_KomaDate")
-               .WithAll<EnemyTag, BossEnemyTag>()
-               .WithoutBurst()
-               .ForEach((Entity entity, ref EnemyTag enemyTag, ref GunPortTag gunPortTag) =>
-               {
-                   enemyTag._enemyHp = komaData.hp;
-                   gunPortTag._shootCoolTime = komaData.shootCoolTime;
-                   gunPortTag._bulletSpeed = komaData.bulletSpeed;
-                   
-                   SetShootKInd(entity, komaData);
-
-               }).Run();
-    }
-
-    /// <summary>
-    /// 射撃の種類のコンポーネントを設定する
-    /// </summary>
-    private void SetShootKInd(Entity entity, KomaData komaData)
+    private void SetBossKomaDate(Entity entity, ref HPTag hpTag, ref GunPortTag gunPortTag, KomaData komaData)
     {
         // コマンドバッファを取得
         EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
+
+        // 
+        hpTag._hp = komaData.hp;
+        gunPortTag._shootCoolTime = komaData.shootCoolTime;
+        gunPortTag._bulletSpeed = komaData.bulletSpeed;
 
         // マテリアルを変更
         commandBuffer.SetSharedComponent(entity, new RenderMesh
@@ -122,6 +107,7 @@ public class BossPhaseSytem : SystemBase
             material = komaData.material
         });
 
+        // 射撃の種類のコンポーネントを設定する
         // 次にセットするGunPortの種類は何か
         switch (komaData.shootKind)
         {
@@ -159,7 +145,5 @@ public class BossPhaseSytem : SystemBase
                 commandBuffer.AddComponent(entity, new AimGunPortTag { });
                 break;
         }
-
     }
-
 }

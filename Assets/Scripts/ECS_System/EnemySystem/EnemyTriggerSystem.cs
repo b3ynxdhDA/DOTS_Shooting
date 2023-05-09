@@ -40,6 +40,7 @@ public class EnemyTriggerSystem : SystemBase
     {
         // ジョブの生成
         EnemyTriggerJob enemyTriggerJob = new EnemyTriggerJob();
+        enemyTriggerJob.HPComponent = GetComponentDataFromEntity<HPTag>(true);
         enemyTriggerJob.EnemyEntity = GetComponentDataFromEntity<EnemyTag>(true);
         enemyTriggerJob.PlayerBulletsEntity = GetComponentDataFromEntity<PlayerBulletTag>(true);
         enemyTriggerJob.PlayerEntity = GetComponentDataFromEntity<PlayerTag>(true);
@@ -58,6 +59,8 @@ public class EnemyTriggerSystem : SystemBase
     [BurstCompile]
     struct EnemyTriggerJob : ITriggerEventsJob
     {
+        // 敵のエンティティを取得
+        [ReadOnly] public ComponentDataFromEntity<HPTag> HPComponent;
         // 敵のエンティティを取得
         [ReadOnly] public ComponentDataFromEntity<EnemyTag> EnemyEntity;
         // プレイヤーの弾のエンティティを取得
@@ -89,9 +92,9 @@ public class EnemyTriggerSystem : SystemBase
                 // プレイヤーの弾を消す
                 entityCommandBuffer.DestroyEntity(entityB);
                 // 敵のエンティティのhpを減らす
-                entityCommandBuffer.SetComponent(entityA, new EnemyTag
+                entityCommandBuffer.SetComponent(entityA, new HPTag
                 {
-                    _enemyHp = EnemyEntity[entityA]._enemyHp - HIT_DAMAGE
+                    _hp = HPComponent[entityA]._hp - HIT_DAMAGE
                 });
             }
             else if (PlayerBulletsEntity.HasComponent(entityA) && EnemyEntity.HasComponent(entityB))
@@ -99,9 +102,9 @@ public class EnemyTriggerSystem : SystemBase
                 // プレイヤーの弾を消す
                 entityCommandBuffer.DestroyEntity(entityA);
                 // 敵のエンティティのhpを減らす
-                entityCommandBuffer.SetComponent(entityB, new EnemyTag
+                entityCommandBuffer.SetComponent(entityB, new HPTag
                 {
-                    _enemyHp = EnemyEntity[entityB]._enemyHp - HIT_DAMAGE
+                    _hp = HPComponent[entityB]._hp - HIT_DAMAGE
                 });
             }
             // 敵とプレイヤーが接触した場合の処理はPlayerTriggerSystemにある

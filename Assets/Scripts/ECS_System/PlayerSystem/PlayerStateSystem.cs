@@ -42,17 +42,17 @@ public class PlayerStateSystem : SystemBase
             .WithName("Player_State")
             .WithAll<PlayerTag>()
             .WithoutBurst()
-            .ForEach((Entity entity, ref PlayerTag playerTag, ref GunPortTag gunPortTag) =>
+            .ForEach((Entity entity, ref HPTag hpTag, ref GunPortTag gunPortTag) =>
             {
                 // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
                 if (!playerManager.GetSetIsPlayerInitialize)
                 {
-                    SetPlayerKomaDate(entity, ref playerTag, ref gunPortTag, playerManager.PlayerKomaData);
+                    SetPlayerKomaDate(entity, ref hpTag, ref gunPortTag, playerManager.PlayerKomaData);
                     playerManager.GetSetIsPlayerInitialize = true;
                 }
 
                 // プレイヤーのHPが0以下なら消す
-                if (playerTag._playerHp <= 0)
+                if (hpTag._hp <= 0)
                 {
                     commandBuffer.DestroyEntity(entity);
                     gameManager.UIManager.CallGameFinish(false);
@@ -67,13 +67,13 @@ public class PlayerStateSystem : SystemBase
     /// <summary>
     /// プレイヤーの駒データをセットする
     /// </summary>
-    private void SetPlayerKomaDate(Entity entity, ref PlayerTag playerTag, ref GunPortTag gunPortTag, KomaData komaData)
+    private void SetPlayerKomaDate(Entity entity, ref HPTag hpTag, ref GunPortTag gunPortTag, KomaData komaData)
     {
         // コマンドバッファを取得
         EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
         // プレイヤーの基礎ステータスを設定する
-        playerTag._playerHp = komaData.hp;
+        hpTag._hp = komaData.hp;
         gunPortTag._shootCoolTime = komaData.shootCoolTime;
         gunPortTag._bulletSpeed = komaData.bulletSpeed;
 

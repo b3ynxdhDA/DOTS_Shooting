@@ -6,10 +6,10 @@ using UnityEngine;
 public class BackGround : MonoBehaviour
 {
     // スクロールスピード
-    const int _SCROLL_SPEED = 1;
+    const int _SCROLL_SPEED = 3;
 
     // 移動してくる画面の上のy座標
-    const float _TOP = 14.5f;
+    const float _TOP = 14f;
 
     // 移動する画面の下のy座標
     const float _LOWER = -11.3f;

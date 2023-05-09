@@ -98,6 +98,9 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        // ConfigCanvasを生成
+        _configCanvas = Instantiate(_configCanvas);
+
         // SEマネージャーを外部から参照しやすく
         SEManager = transform.GetComponent<SEManager>();
 
