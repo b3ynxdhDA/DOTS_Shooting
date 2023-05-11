@@ -11,17 +11,17 @@ public class PlayerMovementSystem : SystemBase
     // 変数宣言------------------------------------------------------------------
     private Camera _mainCamera;
 
-    // スクリーンの左下のワールド座標の
+    // 移動可能範囲の左下のワールド座標の
     private Vector2 _lowerLeft;
 
-    // スクリーンの右上のワールド座標
+    // 移動可能範囲の右上のワールド座標
     private Vector2 _upperRight;
 
     // 定数宣言--------------------------------------------------------
-    // スクリーン座標の左下
-    private readonly Vector2 _MIN_SCREEN_POINT = new Vector2(0.1f, 0.1f);
-    // スクリーン座標の右上
-    private readonly Vector2 _MAX_SCREEN_POINT = new Vector2(0.9f, 0.9f);
+    // 移動可能範囲の左下のスクリーン座標
+    private readonly Vector2 _MIN_SCREEN_POINT = new Vector2(0.28f, 0.08f);
+    // 移動可能範囲の右上のスクリーン座標
+    private readonly Vector2 _MAX_SCREEN_POINT = new Vector2(0.72f, 0.92f);
 
     /// <summary>
     /// システム実行停止時やOnDestroy()の前に呼ばれる処理

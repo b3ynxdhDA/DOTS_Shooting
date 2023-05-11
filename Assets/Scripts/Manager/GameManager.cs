@@ -19,6 +19,16 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
 
     /// <summary>
+    /// 駒に駒データを設定するクラスの参照
+    /// </summary>
+    public KomaManager KomaManager { get; private set; }
+
+    /// <summary>
+    /// 雑魚敵を管理するクラスの参照
+    /// </summary>
+    public NormalEnemyManager NormalEnemyManager { get; private set; }
+
+    /// <summary>
     /// プレイヤーを管理するクラスの参照
     /// </summary>
     public PlayerManager PlayerManager { get; private set; }
@@ -75,6 +85,9 @@ public class GameManager : MonoBehaviour
     [SerializeField, Header("プレイヤーの駒データ")]
     private KomaData _playerKomadate;
 
+    [SerializeField, Header("雑魚敵の駒データ")]
+    private KomaData _normalEnemyKomadate;
+
     [SerializeField, Header("ボスの第1段階の駒データ")]
     private KomaData _bossKomaDate1;
 
@@ -104,6 +117,12 @@ public class GameManager : MonoBehaviour
         // SEマネージャーを外部から参照しやすく
         SEManager = transform.GetComponent<SEManager>();
 
+        // KomaManagerを参照できるようにする
+        KomaManager = new KomaManager();
+
+        // NormalEnemyManagerに雑魚敵の駒データを渡す
+        NormalEnemyManager = new NormalEnemyManager(_normalEnemyKomadate);
+
         // BossManagerにボスの駒データを渡す
         BossManager = new BossManager(_bossKomaDate1, _bossKomaDate2, _bossKomaDate3);
 
@@ -127,7 +146,10 @@ public class GameManager : MonoBehaviour
         // メインゲームシーンのUIManagerを取得
         // DOTSによってGameObjectが少ないのでFindを使用
         UIManager = GameObject.Find("GameCanvas").GetComponent<UIManager>();
-        
+
+        // 雑魚敵の初期化
+        NormalEnemyManager.NormalEnemyInitialize();
+
         // ボスキャラクターの初期化
         BossManager.BossInitialize();
 

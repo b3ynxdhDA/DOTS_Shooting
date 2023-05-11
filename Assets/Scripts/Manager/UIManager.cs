@@ -55,6 +55,7 @@ public class UIManager : MonoBehaviour
         Time.timeScale = _SEFAULT_TIMESCALE;
 
         GameManager.instance.InitializeGame();
+
     }
     private void Update()
     {
@@ -72,7 +73,15 @@ public class UIManager : MonoBehaviour
             //_timerCount -= Time.deltaTime;
             //_timerCountText.text = "" + ((int)_timerCount / _ONE_MINUTES).ToString("00") + " : " + ((int)_timerCount % _ONE_MINUTES).ToString("00");
 
+            // ボスのHPをスライダーに反映する
+            _bossHpSlider.value = GameManager.instance.BossManager.GetBossHP;
+
         }
+    }
+
+    public void SetSliderBossHP(KomaData komaData)
+    {
+        _bossHpSlider.maxValue = komaData.hp;
     }
 
     /// <summary>

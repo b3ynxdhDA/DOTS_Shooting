@@ -1,21 +1,19 @@
 using Unity.Entities;
 
-/// <summary>
-/// プレイヤーの状態をみるシステム
-/// </summary>
-public class PlayerStateSystem : SystemBase
+public class NormalEnemySytem : SystemBase
 {
     // 変数宣言------------------------------------------------------------------
     // 実行タイミングを管理しているシステムグループ
-    private EndSimulationEntityCommandBufferSystem _entityCommandBufferSystem;
+    private BeginSimulationEntityCommandBufferSystem _entityCommandBufferSystem;
 
+    private bool _isNormalEnemyInitialize = false;
     /// <summary>
     /// システム作成時に呼ばれる処理
     /// </summary>
     protected override void OnCreate()
     {
         // EntityCommandBufferの取得
-        _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+        _entityCommandBufferSystem = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
     }
 
     /// <summary>
@@ -25,32 +23,26 @@ public class PlayerStateSystem : SystemBase
     {
         // 各Managerを取得
         GameManager gameManager = GameManager.instance;
-        PlayerManager playerManager = gameManager.PlayerManager;
+        NormalEnemyManager normalEnemyManager = gameManager.NormalEnemyManager;
 
         // コマンドバッファを取得
         EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
         Entities
-            .WithName("Player_State")
-            .WithAll<PlayerTag>()
+            .WithName("Enemy")
+            .WithAll<EnemyTag>()
+            .WithNone<BossEnemyTag>()
             .WithoutBurst()
             .ForEach((Entity entity, ref HPTag hpTag, ref GunPortTag gunPortTag) =>
             {
+                // @一回しか実行しないと一体しか初期化されない
                 // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
-                if (!playerManager.IsPlayerInitialize)
+                if (!_isNormalEnemyInitialize)
                 {
-                    gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, playerManager.PlayerKomaData, commandBuffer);
-                    playerManager.IsPlayerInitialize = true;
+                    gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, normalEnemyManager.NormalEnemyKomaData, commandBuffer);
+                    _isNormalEnemyInitialize = true;
                 }
-
-                // プレイヤーのHPが0以下なら消す
-                if (hpTag._hp <= 0)
-                {
-                    commandBuffer.DestroyEntity(entity);
-                    gameManager.UIManager.CallGameFinish(false);
-                }
-
-            }).Run();// メインスレッド処理
+            }).Run();
 
         // 指定したJob完了後にECBに登録した命令を実行
         _entityCommandBufferSystem.AddJobHandleForProducer(Dependency);

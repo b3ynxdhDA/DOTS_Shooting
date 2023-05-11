@@ -40,6 +40,7 @@ public class PlayerTriggerSystem : SystemBase
     {
         // ジョブの生成
         PlayerTriggerJob playerTriggerJob = new PlayerTriggerJob();
+        playerTriggerJob.HPComponent = GetComponentDataFromEntity<HPTag>(true);
         playerTriggerJob.AllEnemyBulletEntity = GetComponentDataFromEntity<EnemyBulletTag>(true);
         playerTriggerJob.AllEnemyEntity = GetComponentDataFromEntity<EnemyTag>(true);
         playerTriggerJob.PlayerEntity = GetComponentDataFromEntity<PlayerTag>(true);
@@ -58,6 +59,8 @@ public class PlayerTriggerSystem : SystemBase
     [BurstCompile]
     struct PlayerTriggerJob : ITriggerEventsJob
     {
+        // エンティティのHPコンポーネントを取得
+        [ReadOnly] public ComponentDataFromEntity<HPTag> HPComponent;
         // 敵の弾のエンティティを取得
         [ReadOnly] public ComponentDataFromEntity<EnemyBulletTag> AllEnemyBulletEntity;
         // 敵のエンティティを取得
@@ -87,9 +90,9 @@ public class PlayerTriggerSystem : SystemBase
                 // 敵の弾を消す
                 entityCommandBuffer.DestroyEntity(entityA);
                 // プレイヤーのhpを減らす
-                entityCommandBuffer.SetComponent(entityB, new PlayerTag
+                entityCommandBuffer.SetComponent(entityB, new HPTag
                 {
-                    _playerHp = PlayerEntity[entityB]._playerHp - HIT_DAMAGE
+                    _hp = HPComponent[entityB]._hp - HIT_DAMAGE
                 });
             }
             else if (PlayerEntity.HasComponent(entityA) && AllEnemyBulletEntity.HasComponent(entityB))
@@ -97,26 +100,26 @@ public class PlayerTriggerSystem : SystemBase
                 // 敵の弾を消す
                 entityCommandBuffer.DestroyEntity(entityB);
                 // プレイヤーのhpを減らす
-                entityCommandBuffer.SetComponent(entityA, new PlayerTag
+                entityCommandBuffer.SetComponent(entityA, new HPTag
                 {
-                    _playerHp = PlayerEntity[entityA]._playerHp - HIT_DAMAGE
+                    _hp = HPComponent[entityA]._hp - HIT_DAMAGE
                 });
             }
             // 敵とプレイヤーが接触した場合プレイヤーのHPを減らす
             else if (AllEnemyEntity.HasComponent(entityA) && PlayerEntity.HasComponent(entityB))
             {
                 // プレイヤーのhpを減らす
-                entityCommandBuffer.SetComponent(entityB, new PlayerTag
+                entityCommandBuffer.SetComponent(entityB, new HPTag
                 {
-                    _playerHp = PlayerEntity[entityB]._playerHp - HIT_DAMAGE
+                    _hp = HPComponent[entityB]._hp - HIT_DAMAGE
                 });
             }
             else if (PlayerEntity.HasComponent(entityA) && AllEnemyEntity.HasComponent(entityB))
             {
                 // プレイヤーのhpを減らす
-                entityCommandBuffer.SetComponent(entityA, new PlayerTag
+                entityCommandBuffer.SetComponent(entityA, new HPTag
                 {
-                    _playerHp = PlayerEntity[entityA]._playerHp - HIT_DAMAGE
+                    _hp = HPComponent[entityA]._hp - HIT_DAMAGE
                 });
             }
         }

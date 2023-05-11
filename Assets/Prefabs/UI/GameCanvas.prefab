@@ -1794,7 +1794,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.000061035156, y: -30.000061}
+  m_AnchoredPosition: {x: 0, y: -15.840027}
   m_SizeDelta: {x: 1900, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1765523831696679846
@@ -1844,7 +1844,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.57
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2062,9 +2062,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2536755bd273d16468704ff23fea1a44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startCountText: {fileID: 1872188047124899895}
-  _gameFinishText: {fileID: 8248914074717114877}
   _resultUI: {fileID: 3565335276918768464}
+  _bossHpSlider: {fileID: 0}
+  _gameFinishText: {fileID: 8248914074717114877}
+  _startCountText: {fileID: 1872188047124899895}
   _scoreCountText: {fileID: 6191499997070037130}
   _timerCountText: {fileID: 2027964933722721014}
 --- !u!95 &3354961528565407788

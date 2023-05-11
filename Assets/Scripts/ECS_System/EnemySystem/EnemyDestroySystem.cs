@@ -34,17 +34,16 @@ public class EnemyDestroySystem : SystemBase
         Entities
             .WithName("Enemy_Destroy")
             .WithAll<EnemyTag>()
-            .WithNone<BossEnemyTag>()
             .WithBurst()
-            .ForEach((Entity entity, in EnemyTag enemyTag) =>
+            .ForEach((Entity entity, in HPTag hpTag) =>
             {
                 // 敵のHPが0以下になったら消す
-                if (enemyTag._enemyHp <= 0)
+                if (hpTag._hp <= 0)
                 {
                     commandBuffer.DestroyEntity(entity);
                 }
 
-            }).WithoutBurst().Run();// メインスレッド処理
+            }).Run();// メインスレッド処理
 
         // 指定したJob完了後にECBに登録した命令を実行
         _entityCommandBufferSystem.AddJobHandleForProducer(Dependency);

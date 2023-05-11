@@ -59,7 +59,7 @@ public class EnemyTriggerSystem : SystemBase
     [BurstCompile]
     struct EnemyTriggerJob : ITriggerEventsJob
     {
-        // 敵のエンティティを取得
+        // エンティティのHPコンポーネントを取得
         [ReadOnly] public ComponentDataFromEntity<HPTag> HPComponent;
         // 敵のエンティティを取得
         [ReadOnly] public ComponentDataFromEntity<EnemyTag> EnemyEntity;

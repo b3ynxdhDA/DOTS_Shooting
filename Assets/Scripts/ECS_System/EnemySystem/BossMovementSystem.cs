@@ -11,7 +11,7 @@ public class BossMovementSystem : ComponentSystem
 {
     // 変数宣言------------------------------------------------------------------
     // ボスキャラクターの移動の間隔
-    private float _moveInterval = 5f;
+    private float _moveInterval = UnityEngine.Random.Range(_INTERVAL_MIN, _INTERVAL_MAX);
 
     // 次の移動地点
     float3 nextPoint;
@@ -24,10 +24,10 @@ public class BossMovementSystem : ComponentSystem
 
     // 定数宣言------------------------------------------------------------------
     // 移動インターバルの最大
-    const float _INTERVAL_MAX = 8f;
+    const float _INTERVAL_MAX = 5f;
 
     // 移動インターバルの最小
-    const float _INTERVAL_MIN = 3f;
+    const float _INTERVAL_MIN = 2f;
 
     /// <summary>
     /// システム有効時にフレーム毎に呼ばれる処理
