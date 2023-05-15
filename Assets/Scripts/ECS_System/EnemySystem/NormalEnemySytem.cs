@@ -39,7 +39,7 @@ public class NormalEnemySytem : SystemBase
                 // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
                 if (!_isNormalEnemyInitialize)
                 {
-                    gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, normalEnemyManager.NormalEnemyKomaData, commandBuffer);
+                    //gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, normalEnemyManager.NormalEnemyKomaData, commandBuffer);
                     _isNormalEnemyInitialize = true;
                 }
             }).Run();
