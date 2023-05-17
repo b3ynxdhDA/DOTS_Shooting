@@ -1,17 +1,25 @@
+using Unity.Collections;
 using Unity.Entities;
 
 public class NormalEnemySytem : SystemBase
 {
     // 変数宣言------------------------------------------------------------------
+    // 
+    private EntityManager entityManager;
+
     // 実行タイミングを管理しているシステムグループ
     private BeginSimulationEntityCommandBufferSystem _entityCommandBufferSystem;
 
     private bool _isNormalEnemyInitialize = false;
+
     /// <summary>
     /// システム作成時に呼ばれる処理
     /// </summary>
     protected override void OnCreate()
     {
+        //　デフォルトのワールドのEntityManagerの取得
+        entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+
         // EntityCommandBufferの取得
         _entityCommandBufferSystem = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
     }
@@ -34,13 +42,17 @@ public class NormalEnemySytem : SystemBase
             .WithNone<BossEnemyTag>()
             .WithoutBurst()
             .ForEach((Entity entity, ref HPTag hpTag, ref GunPortTag gunPortTag) =>
-            {
+            {   
+                // enemyTagがついたエンティティを配列に取得したい
+                //NativeArray<Entity> enemys = entityManager.get
+
                 // @一回しか実行しないと一体しか初期化されない
                 // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
                 if (!_isNormalEnemyInitialize)
                 {
-                    //gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, normalEnemyManager.NormalEnemyKomaData, commandBuffer);
+                    gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, normalEnemyManager.NormalEnemyKomaData, commandBuffer);
                     _isNormalEnemyInitialize = true;
+                    
                 }
             }).Run();
 
