@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e64d4ee0a61e45d42a7d87cde71f926b
+  m_SerializeEntries:
+  - m_GUID: 2c7d773a1422e7846923190e640f8128
+    m_Address: Narigoma
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 102900000, guid: 2c7d773a1422e7846923190e640f8128, type: 3}
+    m_TargetAsset: {fileID: 102900000, guid: 2c7d773a1422e7846923190e640f8128, type: 3}
+  - m_GUID: 5b510ba4e9e0e264bb6bd93db187835c
+    m_Address: tokin.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 5b510ba4e9e0e264bb6bd93db187835c, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 5b510ba4e9e0e264bb6bd93db187835c, type: 2}
+  - m_GUID: be3569e0ed87d3c4ab4bc0a84bdf89f0
+    m_Address: narikyou.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: be3569e0ed87d3c4ab4bc0a84bdf89f0, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: be3569e0ed87d3c4ab4bc0a84bdf89f0, type: 2}
+  - m_GUID: 4b5a9ec87c66d284c9812a016ab8c16c
+    m_Address: narikei.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 4b5a9ec87c66d284c9812a016ab8c16c, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 4b5a9ec87c66d284c9812a016ab8c16c, type: 2}
+  - m_GUID: e8e9f5b8d4e6d61439e31a800226c2e7
+    m_Address: narigin.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: e8e9f5b8d4e6d61439e31a800226c2e7, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: e8e9f5b8d4e6d61439e31a800226c2e7, type: 2}
+  - m_GUID: da441b924ebf1d34aa10b37c26fd4d08
+    m_Address: ryuou.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: da441b924ebf1d34aa10b37c26fd4d08, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: da441b924ebf1d34aa10b37c26fd4d08, type: 2}
+  - m_GUID: 504823118ca8ef74b88435cd16eca243
+    m_Address: ryuma.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 504823118ca8ef74b88435cd16eca243, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 504823118ca8ef74b88435cd16eca243, type: 2}
+  - m_GUID: 9e47073bc55b5f0469d3d54e8c42f8c8
+    m_Address: kinsyou.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 9e47073bc55b5f0469d3d54e8c42f8c8, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 9e47073bc55b5f0469d3d54e8c42f8c8, type: 2}
+  - m_GUID: 2bd25494b690c5b4c8d14db91be3b522
+    m_Address: hisya.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 2bd25494b690c5b4c8d14db91be3b522, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 2bd25494b690c5b4c8d14db91be3b522, type: 2}
+  - m_GUID: de559b9483941154980817a1934552f4
+    m_Address: kakugyou.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: de559b9483941154980817a1934552f4, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: de559b9483941154980817a1934552f4, type: 2}
+  - m_GUID: 9738ee5cb4945d148beb3ba7eb7a66df
+    m_Address: gyokusyou.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 9738ee5cb4945d148beb3ba7eb7a66df, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 9738ee5cb4945d148beb3ba7eb7a66df, type: 2}
+  - m_GUID: 107d5ba0a2e6d9244904d161ba9dc299
+    m_Address: ousyou.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 107d5ba0a2e6d9244904d161ba9dc299, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 107d5ba0a2e6d9244904d161ba9dc299, type: 2}
+  - m_GUID: fd5b0e7a656eb204f8a7a44651219437
+    m_Address: hu.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: fd5b0e7a656eb204f8a7a44651219437, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: fd5b0e7a656eb204f8a7a44651219437, type: 2}
+  - m_GUID: 68b1b39a6a388c14885f17fde9f57e02
+    m_Address: kyousya.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 68b1b39a6a388c14885f17fde9f57e02, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 68b1b39a6a388c14885f17fde9f57e02, type: 2}
+  - m_GUID: 95c575e2bba918548adf30f78951e872
+    m_Address: keima.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: 95c575e2bba918548adf30f78951e872, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: 95c575e2bba918548adf30f78951e872, type: 2}
+  - m_GUID: e09808d080016034ca284afc3cc08d9c
+    m_Address: ginsyou.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 11400000, guid: e09808d080016034ca284afc3cc08d9c, type: 2}
+    m_TargetAsset: {fileID: 11400000, guid: e09808d080016034ca284afc3cc08d9c, type: 2}
+  - m_GUID: 9db3f9a4a95d29446b9c256fb06a55da
+    m_Address: NormalKoma
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    m_MainAsset: {fileID: 102900000, guid: 9db3f9a4a95d29446b9c256fb06a55da, type: 3}
+    m_TargetAsset: {fileID: 102900000, guid: 9db3f9a4a95d29446b9c256fb06a55da, type: 3}
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 27a4fd913ff9ef543b390f385f904554, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 68e7d78423b61f442a1643970b8dc9e5, type: 2}
+    - {fileID: 11400000, guid: 7d8cad0940d1c2242a67348cc3d81370, type: 2}

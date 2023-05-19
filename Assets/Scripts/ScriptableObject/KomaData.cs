@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObject/Create KomaData")]
@@ -42,4 +44,9 @@ public class KomaData : ScriptableObject
     /// 射撃のクールタイム
     /// </summary>
     public float shootCoolTime;
+
+    public static implicit operator KomaData(Task<KomaData> v)
+    {
+        throw new NotImplementedException();
+    }
 }

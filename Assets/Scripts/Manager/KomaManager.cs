@@ -1,17 +1,29 @@
 using Unity.Entities;
 using Unity.Rendering;
+using System.Collections.Generic;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+#if UNITY_EDITOR
+using UnityEngine;
+#endif
 
 /// <summary>
 /// 駒を管理するクラス
 /// </summary>
 public class KomaManager
 {
+    private System.Threading.Tasks.Task<KomaData> normalKoma;
+
+    private Dictionary<GameManager.KomaKind, KomaData> _normalkoma = new Dictionary<GameManager.KomaKind, KomaData>();
+
+
     /// <summary>
     /// ゲーム開始時にGameManagerから呼ばれるKomaManagerの参照メソッド
     /// </summary>
     public KomaManager()
     {
-
+        normalKoma = Addressables.LoadAssetAsync<KomaData>("tokin.asset").Task;
+        Debug.Log(normalKoma);
     }
 
     /// <summary>

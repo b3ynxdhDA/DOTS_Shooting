@@ -76,6 +76,22 @@ public class GameManager : MonoBehaviour
         Config
     };
 
+    /// <summary>
+    /// @お試し駒種別
+    /// </summary>
+    public enum KomaKind
+    {
+        hu,
+        kyousya,
+        keima,
+        ginsyou,
+        kakugyou,
+        hisya,
+        kinsyou,
+        gyokusyou,
+        ousyou
+    }
+
     [HideInInspector]// スコアの変数
     public int _nowScore = 0;
 
@@ -120,15 +136,14 @@ public class GameManager : MonoBehaviour
         // KomaManagerを参照できるようにする
         KomaManager = new KomaManager();
 
+        // PlayerManagerにプレイヤーの駒データを渡す
+        PlayerManager = new PlayerManager(_playerKomadate);
+
         // NormalEnemyManagerに雑魚敵の駒データを渡す
         NormalEnemyManager = new NormalEnemyManager(_normalEnemyKomadate);
 
         // BossManagerにボスの駒データを渡す
         BossManager = new BossManager(_bossKomaDate1, _bossKomaDate2, _bossKomaDate3);
-
-        // PlayerManagerにプレイヤーの駒データを渡す
-        PlayerManager = new PlayerManager(_playerKomadate);
-
     }
 
     private void Update()
