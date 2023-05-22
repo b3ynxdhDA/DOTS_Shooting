@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Koma01_f_hu
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: faaf8f5a942c938449398f84641634db, type: 2}
-  hp: 20
+  hp: 5
   shootKind: 0
   shootLine: 1
   bulletSpeed: 4

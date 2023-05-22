@@ -33,7 +33,7 @@ public class BossManager
     /// <summary>
     /// ボスキャラクターの状態が何段階目か
     /// </summary>
-    public int BossPhaseCount { get { return _bossPhaseCount; }}
+    public int BossPhaseCount { get { return _bossPhaseCount; } private set { } }
 
     /// <summary>
     /// 第1段階の駒が設定されているか

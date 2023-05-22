@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Koma03_f_keima
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 3bfe2e51c4efa4148ad2746e1a471ae7, type: 2}
-  hp: 30
+  hp: 5
   shootKind: 1
   shootLine: 2
   bulletSpeed: 10

@@ -6,6 +6,10 @@ public class BossPhaseSytem : SystemBase
     // 実行タイミングを管理しているシステムグループ
     private BeginSimulationEntityCommandBufferSystem _entityCommandBufferSystem;
 
+    // 定数宣言------------------------------------------------------------------
+    // ボスの段階が変化するHP
+    private const int _CHANGE_PHASE_HP = 1;
+
     /// <summary>
     /// システム作成時に呼ばれる処理
     /// </summary>
@@ -51,7 +55,7 @@ public class BossPhaseSytem : SystemBase
                     // 第1段階
                     case 1:
                         // ボスのHPが0より小さくなったら
-                        if (hpTag._hp < 0)
+                        if (hpTag._hp < _CHANGE_PHASE_HP)
                         {
                             // 次の駒をセットする
                             gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, bossManager.BossKomaData2, commandBuffer);
@@ -66,13 +70,13 @@ public class BossPhaseSytem : SystemBase
                     // 第2段階
                     case 2:
                         // ボスのHPが0より小さくなったら
-                        if (hpTag._hp < 0)
+                        if (hpTag._hp < _CHANGE_PHASE_HP)
                         {
                             // 次の駒をセットする
                             gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, bossManager.BossKomaData3, commandBuffer);
 
                             // HPバーを再設定
-                            gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData2);
+                            gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData3);
 
                             // ボスの攻撃段階を上げる
                             bossManager.UpdateBossCount();
@@ -81,7 +85,7 @@ public class BossPhaseSytem : SystemBase
                     // 第3段階
                     case 3:
                         // ボスのHPが0より小さくなったら
-                        if (hpTag._hp < 0)
+                        if (hpTag._hp < _CHANGE_PHASE_HP)
                         {
                             gameManager.UIManager.CallGameFinish(true);
                         }

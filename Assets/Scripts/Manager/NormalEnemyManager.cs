@@ -1,13 +1,8 @@
-using UnityEngine;
-using Unity.Entities;
-using Unity.Transforms;
-using Unity.Mathematics;
-using Unity.Rendering;
 
 /// <summary>
 /// ‹î‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 /// </summary>
-public class NormalEnemyManager : MonoBehaviour
+public class NormalEnemyManager
 {
 
     #region •Ï”éŒ¾

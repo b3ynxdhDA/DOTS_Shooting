@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: koma02_f_kyousya
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 72fbf754a52e74647bb091197befc55b, type: 2}
-  hp: 30
+  hp: 5
   shootKind: 0
   shootLine: 1
   bulletSpeed: 30
