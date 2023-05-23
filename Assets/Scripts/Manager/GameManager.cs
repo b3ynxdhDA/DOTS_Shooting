@@ -76,22 +76,6 @@ public class GameManager : MonoBehaviour
         Config
     };
 
-    /// <summary>
-    /// @お試し駒種別
-    /// </summary>
-    public enum KomaKind
-    {
-        hu,
-        kyousya,
-        keima,
-        ginsyou,
-        kakugyou,
-        hisya,
-        kinsyou,
-        gyokusyou,
-        ousyou
-    }
-
     [HideInInspector]// スコアの変数
     public int _nowScore = 0;
 
@@ -101,8 +85,11 @@ public class GameManager : MonoBehaviour
     [SerializeField, Header("プレイヤーの駒データ")]
     private KomaData _playerKomadate;
 
+    [SerializeField, Header("雑魚敵のベースプレハブ")]
+    private Entity _enemyBasePrefab;
+
     [SerializeField, Header("雑魚敵の駒データ")]
-    private KomaData _normalEnemyKomadate;
+    private KomaData[] _normalEnemyKomadate;
 
     [SerializeField, Header("ボスの第1段階の駒データ")]
     private KomaData _bossKomaDate1;

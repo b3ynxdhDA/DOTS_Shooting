@@ -1,11 +1,11 @@
-using Unity.Collections;
 using Unity.Entities;
+using Unity.Transforms;
+using Unity.Rendering;
+using Unity.Mathematics;
 
 public class NormalEnemySytem : SystemBase
 {
     // 変数宣言------------------------------------------------------------------
-    // エンティティマネージャーを取得
-    private EntityManager entityManager;
 
     // 実行タイミングを管理しているシステムグループ
     private BeginSimulationEntityCommandBufferSystem _entityCommandBufferSystem;
@@ -24,11 +24,10 @@ public class NormalEnemySytem : SystemBase
     /// </summary>
     protected override void OnCreate()
     {
-        //　デフォルトのワールドのEntityManagerの取得
-        entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-
         // EntityCommandBufferの取得
         _entityCommandBufferSystem = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+
+
     }
 
     /// <summary>
@@ -68,12 +67,29 @@ public class NormalEnemySytem : SystemBase
                     _firstIndex = entity.Index;
                 }
 
+                // 駒データを配列から使用する駒をランダムに決める
+                KomaData nowKomaData = normalEnemyManager.NormalEnemyKomaData[UnityEngine.Random.Range(0, normalEnemyManager.NormalEnemyKomaData.Length)];
+
                 // 雑魚敵の駒データを設定する
-                gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, normalEnemyManager.NormalEnemyKomaData, commandBuffer);
+                gameManager.KomaManager.SetKomaDate(entity, ref hpTag, ref gunPortTag, nowKomaData, commandBuffer);
                     
             }).Run();
 
         // 指定したJob完了後にECBに登録した命令を実行
         _entityCommandBufferSystem.AddJobHandleForProducer(Dependency);
+    }
+
+    private void InstantiateEnemy()
+    {
+        // コマンドバッファを取得
+        EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
+
+        Entities
+            .WithName("InstantiateEnemy")
+            .ForEach((Entity entity, int entityInQueryIndex) =>
+            {
+                // エンティティ生成
+                //Entity instance = commandBuffer.Instantiate();
+            }).Run();
     }
 }

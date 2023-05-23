@@ -1,41 +1,17 @@
 using Unity.Entities;
 using Unity.Rendering;
-using System.Collections.Generic;
-using UnityEngine.AddressableAssets;
-using Cysharp.Threading.Tasks;
-#if UNITY_EDITOR
-using UnityEngine;
-#endif
 
 /// <summary>
 /// 駒を管理するクラス
 /// </summary>
 public class KomaManager
 {
-    private System.Threading.Tasks.Task<KomaData> normalKoma;
-
-    private Dictionary<GameManager.KomaKind, KomaData> _normalKoma = new Dictionary<GameManager.KomaKind, KomaData>();
-
-
     /// <summary>
     /// ゲーム開始時にGameManagerから呼ばれるKomaManagerの参照メソッド
     /// </summary>
     public KomaManager()
     {
-        // Spriteをロード
-        var sprite = Addressables.LoadAssetAsync<KomaData>("NariKoma/Koma01_f_hu.asset");
 
-        // ロードに失敗しても、Debug.LogErrorに表示されるだけで、エラーにはならない模様
-        var sprite2 = Addressables.LoadAssetAsync<KomaData>("hoge").Task;
-        if (sprite2 == default)
-        {
-            // defaultであれば、ロードに失敗している
-            Debug.LogError("ロードに失敗しました");
-        }
-
-        Debug.Log(sprite);
-        //　使い終わったらメモリから開放する
-        Addressables.Release(sprite);
     }
 
     /// <summary>
