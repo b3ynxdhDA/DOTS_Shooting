@@ -66,6 +66,8 @@ public class NormalEnemySytem : SystemBase
                     _isNormalEnemyInitialize = true;
                     _firstIndex = entity.Index;
                 }
+                // エンティティ生成
+                commandBuffer.Instantiate(gameManager.KomoEntityPrefab);
 
                 // 駒データを配列から使用する駒をランダムに決める
                 KomaData nowKomaData = normalEnemyManager.NormalEnemyKomaData[UnityEngine.Random.Range(0, normalEnemyManager.NormalEnemyKomaData.Length)];
@@ -88,8 +90,7 @@ public class NormalEnemySytem : SystemBase
             .WithName("InstantiateEnemy")
             .ForEach((Entity entity, int entityInQueryIndex) =>
             {
-                // エンティティ生成
-                //Entity instance = commandBuffer.Instantiate();
+
             }).Run();
     }
 }

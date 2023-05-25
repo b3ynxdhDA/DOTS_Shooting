@@ -48,6 +48,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public UIManager UIManager { get; private set; }
 
+
+    public Entity KomoEntityPrefab { get { return _komaEntityPrefab; } }
+
     /// <summary>
     /// ゲームステートの参照
     /// </summary>
@@ -85,9 +88,6 @@ public class GameManager : MonoBehaviour
     [SerializeField, Header("プレイヤーの駒データ")]
     private KomaData _playerKomadate;
 
-    [SerializeField, Header("雑魚敵のベースプレハブ")]
-    private Entity _enemyBasePrefab;
-
     [SerializeField, Header("雑魚敵の駒データ")]
     private KomaData[] _normalEnemyKomadate;
 
@@ -99,6 +99,9 @@ public class GameManager : MonoBehaviour
 
     [SerializeField, Header("ボスの第3段階の駒データ")]
     private KomaData _bossKomaDate3;
+
+    // 駒の生成に使うエンティティプレハブ
+    private Entity _komaEntityPrefab;
 
     #endregion
     private void Awake()
@@ -113,6 +116,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        // エンティティに変換した駒のプレハブを取得
+        _komaEntityPrefab = gameObject.GetComponent<ConvertPrefabToEntity>().GetEntityPrefab();
 
         // ConfigCanvasを生成
         _configCanvas = Instantiate(_configCanvas);

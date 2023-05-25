@@ -10,7 +10,7 @@ using UnityEngine;
 public struct GunPortTag : IComponentData
 {
     // 発射する弾のエンティティ
-    public Entity _straightBulletEntity;
+    public Entity _BulletEntity;
 
     // 連射の間隔
     [HideInInspector] public float _shootCoolTime;

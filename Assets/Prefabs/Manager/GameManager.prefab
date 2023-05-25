@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8915979016316284305}
   - component: {fileID: 4429697775210250949}
   - component: {fileID: 413296009493495641}
+  - component: {fileID: 196149331915879254}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -49,7 +50,10 @@ MonoBehaviour:
   Quad: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
   _nowScore: 0
   _playerKomadate: {fileID: 11400000, guid: fd5b0e7a656eb204f8a7a44651219437, type: 2}
-  _normalEnemyKomadate: {fileID: 11400000, guid: fd5b0e7a656eb204f8a7a44651219437, type: 2}
+  _normalEnemyKomadate:
+  - {fileID: 11400000, guid: fd5b0e7a656eb204f8a7a44651219437, type: 2}
+  - {fileID: 11400000, guid: 68b1b39a6a388c14885f17fde9f57e02, type: 2}
+  - {fileID: 11400000, guid: 95c575e2bba918548adf30f78951e872, type: 2}
   _bossKomaDate1: {fileID: 11400000, guid: 2bd25494b690c5b4c8d14db91be3b522, type: 2}
   _bossKomaDate2: {fileID: 11400000, guid: de559b9483941154980817a1934552f4, type: 2}
   _bossKomaDate3: {fileID: 11400000, guid: 9738ee5cb4945d148beb3ba7eb7a66df, type: 2}
@@ -164,3 +168,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &196149331915879254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677681601453861856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee952e4dd162b344b6b872ee01127ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -57,7 +57,7 @@ public class AimShootSystem : SystemBase
                         direction = math.normalizesafe(targetPosition - localToWorld.Position);
                     }
                     // Prefab‚ÌEntity‚©‚ç’e‚ğ•¡»‚·‚é
-                    Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
+                    Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._BulletEntity);
 
                     // ˆÊ’u‚Ì‰Šú‰»
                     comandBuffer.SetComponent(instantiateEntity, new Translation

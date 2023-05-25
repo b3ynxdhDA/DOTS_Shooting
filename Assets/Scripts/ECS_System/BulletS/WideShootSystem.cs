@@ -53,7 +53,7 @@ public class WideShootSystem : SystemBase
                     for (int i = 0; i < WideTag._lines; i++)
                     {
                         // PrefabとなるEntityから弾を複製する
-                        Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
+                        Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._BulletEntity);
 
                         // 発射地点のローカル座標
                         float3 localPos = localToWorld.Position;

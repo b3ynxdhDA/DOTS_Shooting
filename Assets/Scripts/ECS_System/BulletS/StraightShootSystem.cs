@@ -51,7 +51,7 @@ public class StraightShootSystem : SystemBase
                     for (int i = 0; i < straightTag._lines; i++)
                     {
                         // Prefab‚Æ‚È‚éEntity‚©‚ç’e‚ð•¡»‚·‚é
-                        Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._straightBulletEntity);
+                        Entity instantiateEntity = comandBuffer.Instantiate(gunporttag._BulletEntity);
 
                         // ”­ŽË‚Ì—ñ‚²‚Æ‚ÌˆÊ’u‚ðŒvŽZ‚·‚é
                         float3 pos = new float3(localToWorld.Position.x + i - _SHOOT_SPACE * straightTag._lines + _SHOOT_SPACE, localToWorld.Position.y, 0f);

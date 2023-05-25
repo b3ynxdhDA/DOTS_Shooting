@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1617539298828681250, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_Name
-      value: Enemy_hu (8)
+      value: NormalEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 2105845969678195352, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_RootOrder
@@ -276,7 +276,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1617539298828681250, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_Name
-      value: Enemy_hu
+      value: NormalEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 2105845969678195352, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_RootOrder
@@ -337,7 +337,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1617539298828681250, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_Name
-      value: Enemy_hu (2)
+      value: NormalEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 2105845969678195352, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_RootOrder
@@ -708,7 +708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002c7bfffff74014cbbbe9c5f0390c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _straightBulletEntity: {fileID: 6885799998334693771, guid: 8b6b7aa85cf95a44e86cc5a1e86f666e, type: 3}
+  _BulletEntity: {fileID: 0}
   _shootCoolTime: 0.6
   _shootInterval: 0.2
   _bulletSpeed: 5
@@ -751,7 +751,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1617539298828681250, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_Name
-      value: Enemy_hu (6)
+      value: NormalEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 2105845969678195352, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_RootOrder
@@ -905,7 +905,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1617539298828681250, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_Name
-      value: Enemy_hu (7)
+      value: NormalEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 2105845969678195352, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_RootOrder
@@ -1047,6 +1047,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 196149331915879254, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
+      propertyPath: _enemyBasePrefab
+      value: 
+      objectReference: {fileID: 1617539298828681250, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
+    - target: {fileID: 196149331915879254, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
+      propertyPath: _enemyBulletPrefab
+      value: 
+      objectReference: {fileID: 6885799998334693771, guid: 29049b4cdba3d234dbcdade345ddf202, type: 3}
     - target: {fileID: 5677681601453861856, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -1142,7 +1150,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1617539298828681250, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_Name
-      value: Enemy_hu (1)
+      value: NormalEnemy
       objectReference: {fileID: 0}
     - target: {fileID: 2105845969678195352, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
       propertyPath: m_RootOrder
