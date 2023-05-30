@@ -357,7 +357,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002c7bfffff74014cbbbe9c5f0390c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _straightBulletEntity: {fileID: 6885799998334693771, guid: 29049b4cdba3d234dbcdade345ddf202, type: 3}
+  _BulletEntity: {fileID: 6885799998334693771, guid: 29049b4cdba3d234dbcdade345ddf202, type: 3}
   _shootCoolTime: 0.2
   _shootInterval: 0
   _bulletSpeed: 0

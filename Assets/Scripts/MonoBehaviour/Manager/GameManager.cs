@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
         }
 
         // エンティティに変換した駒のプレハブを取得
-        _komaEntityPrefab = gameObject.GetComponent<ConvertPrefabToEntity>().GetEntityPrefab();
+        //_komaEntityPrefab = gameObject.GetComponent<SpawnerAuthoring>().GetEntityPrefab();
 
         // ConfigCanvasを生成
         _configCanvas = Instantiate(_configCanvas);

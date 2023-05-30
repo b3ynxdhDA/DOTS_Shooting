@@ -21,12 +21,19 @@ public class KomaManager
     /// <param name="hpTag">対象のHPTagコンポーネント</param>
     /// <param name="gunPortTag">対象のGunPortTagコンポーネント</param>
     /// <param name="komaData">設定するKomaDate</param>
-    public void SetKomaDate(Entity entity, ref HPTag hpTag, ref GunPortTag gunPortTag, KomaData komaData, EntityCommandBuffer commandBuffer)
+    public void SetKomaDate(Entity entity, KomaData komaData, EntityCommandBuffer commandBuffer)
     {
         // ボスの基礎ステータスを設定する
-        hpTag._hp = komaData.hp;
-        gunPortTag._shootCoolTime = komaData.shootCoolTime;
-        gunPortTag._bulletSpeed = komaData.bulletSpeed;
+        commandBuffer.SetComponent(entity, new HPTag
+        {
+            _hp = komaData.hp
+        });
+
+        commandBuffer.SetComponent(entity, new GunPortTag
+        {
+            _shootCoolTime = komaData.shootCoolTime,
+            _bulletSpeed = komaData.bulletSpeed
+        });
 
         // マテリアルを変更
         commandBuffer.SetSharedComponent(entity, new RenderMesh

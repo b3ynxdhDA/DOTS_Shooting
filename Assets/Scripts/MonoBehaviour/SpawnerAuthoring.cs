@@ -1,18 +1,40 @@
 using UnityEngine;
 using Unity.Entities;
-using Unity.Transforms;
-using Unity.Physics;
+using System.Collections.Generic;
 
 /// <summary>
 /// 駒のプレハブをエンティティに変換する
 /// </summary>
-public class ConvertPrefabToEntity : MonoBehaviour
+[DisallowMultipleComponent]
+//@[TypeManager.TypeVersion]
+[System.Obsolete]
+public class SpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity, IDeclareReferencedPrefabs
 {
     [SerializeField, Header("雑魚敵のベースプレハブ")]
     private GameObject _enemyBasePrefab;
 
     [SerializeField, Header("雑魚敵の弾のプレハブ")]
     private GameObject _enemyBulletPrefab;
+
+    public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
+    {
+        // Spawner識別タグを追加
+        dstManager.AddComponentData(entity, new Spawner());
+
+        // 生成するプレハブを追加
+        dstManager.AddComponentData(entity, new SpawnerData()
+        {
+            SpawnPrefabEntity = conversionSystem.GetPrimaryEntity(_enemyBulletPrefab)
+        });
+
+        // Spawner識別タグを追加
+        dstManager.AddComponentData(entity, new SpawnTag());
+    }
+
+    public void DeclareReferencedPrefabs(List<GameObject> referencedPrefabs)
+    {
+        referencedPrefabs.Add(_enemyBulletPrefab);
+    }
 
     public Entity GetEntityPrefab()
     {
@@ -24,13 +46,14 @@ public class ConvertPrefabToEntity : MonoBehaviour
         // GameObjectプレハブからEntityプレハブへの変換
         GameObjectConversionSettings settings = GameObjectConversionSettings.FromWorld(defaultWorld, null);
         Entity entityPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(_enemyBasePrefab, settings);
-        Entity bulletPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(_enemyBulletPrefab, settings);
 
-        entityManager.AddComponentData(entityPrefab, new PhysicsCollider { });
+        Entity bulletPrefab = GameObjectConversionUtility.ConvertGameObjectHierarchy(_enemyBulletPrefab, settings);
 
         entityManager.RemoveComponent<LinkedEntityGroup>(entityPrefab);
 
         entityManager.SetName(entityPrefab, "NormalEnemy");
+
+        entityManager.SetName(bulletPrefab, "Bullet");
 
         entityManager.SetComponentData(entityPrefab, new GunPortTag
         {
