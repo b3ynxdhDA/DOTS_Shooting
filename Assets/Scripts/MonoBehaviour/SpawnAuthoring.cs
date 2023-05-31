@@ -6,9 +6,7 @@ using System.Collections.Generic;
 /// 駒のプレハブをエンティティに変換する
 /// </summary>
 [DisallowMultipleComponent]
-//@[TypeManager.TypeVersion]
-[System.Obsolete]
-public class SpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity, IDeclareReferencedPrefabs
+public class SpawnAuthoring : MonoBehaviour, IConvertGameObjectToEntity, IDeclareReferencedPrefabs
 {
     [SerializeField, Header("雑魚敵のベースプレハブ")]
     private GameObject _enemyBasePrefab;
@@ -24,9 +22,10 @@ public class SpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity, IDecl
         // 生成するプレハブを追加
         dstManager.AddComponentData(entity, new SpawnerData()
         {
-            SpawnPrefabEntity = conversionSystem.GetPrimaryEntity(_enemyBulletPrefab)
+            SpawnPrefabEntity = conversionSystem.GetPrimaryEntity(_enemyBasePrefab)
         });
 
+        Debug.Log("convert");
         // Spawner識別タグを追加
         dstManager.AddComponentData(entity, new SpawnTag());
     }
@@ -51,7 +50,7 @@ public class SpawnerAuthoring : MonoBehaviour, IConvertGameObjectToEntity, IDecl
 
         entityManager.RemoveComponent<LinkedEntityGroup>(entityPrefab);
 
-        entityManager.SetName(entityPrefab, "NormalEnemy");
+        entityManager.SetName(entityPrefab, "NormalEnemys");
 
         entityManager.SetName(bulletPrefab, "Bullet");
 

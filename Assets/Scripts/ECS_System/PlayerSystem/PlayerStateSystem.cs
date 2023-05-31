@@ -39,7 +39,7 @@ public class PlayerStateSystem : SystemBase
                 // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
                 if (!playerManager.IsPlayerInitialize)
                 {
-                    gameManager.KomaManager.SetKomaDate(entity, playerManager.PlayerKomaData, commandBuffer);
+                    gameManager.KomaManager.SetKomaDate(entity, playerManager.PlayerKomaData, gunPortTag, commandBuffer);
                     playerManager.IsPlayerInitialize = true;
                 }
 

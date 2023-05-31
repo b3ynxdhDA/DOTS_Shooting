@@ -29,6 +29,8 @@ public class EnemySpawnSytem : SystemBase
     {
         // EntityCommandBufferの取得
         _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
+
+
     }
 
     /// <summary>
@@ -43,20 +45,25 @@ public class EnemySpawnSytem : SystemBase
         GameManager gameManager = GameManager.instance;
         NormalEnemyManager normalEnemyManager = gameManager.NormalEnemyManager;
 
+        // 駒データを配列から使用する駒をランダムに決める
+        KomaData nowKomaData = normalEnemyManager.NormalEnemyKomaData[UnityEngine.Random.Range(0, normalEnemyManager.NormalEnemyKomaData.Length)];
+
         Entities
             .WithName("EnemySpawn")
             .WithAll<Spawner, SpawnTag>()
             .WithoutBurst()
-            .ForEach((Entity entity,in SpawnerData spawnerData) =>
+            .ForEach((Entity entity, in SpawnerData spawnerData) =>
             {
                 // エンティティを生成
-                var createEntity = concurrent.Instantiate(spawnerData.SpawnPrefabEntity);
+                Entity createEntity = concurrent.Instantiate(spawnerData.SpawnPrefabEntity);
 
-                // 駒データを配列から使用する駒をランダムに決める
-                KomaData nowKomaData = normalEnemyManager.NormalEnemyKomaData[UnityEngine.Random.Range(0, normalEnemyManager.NormalEnemyKomaData.Length)];
+                // GunPortTagコンポーネントを取得
+                GunPortTag gunPortTag = GetComponent<GunPortTag>(createEntity);
 
                 // 雑魚敵の駒データを設定する
-                gameManager.KomaManager.SetKomaDate(createEntity, nowKomaData, concurrent);
+                gameManager.KomaManager.SetKomaDate(createEntity, nowKomaData, gunPortTag, concurrent);
+
+                concurrent.RemoveComponent<SpawnTag>(entity);
 
             }).Run();
 

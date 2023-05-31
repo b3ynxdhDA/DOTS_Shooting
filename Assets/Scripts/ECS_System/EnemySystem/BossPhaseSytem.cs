@@ -41,7 +41,7 @@ public class BossPhaseSytem : SystemBase
                 if (!bossManager.IsBossInitialize)
                 {
                     // 第一段階の駒をセットする
-                    gameManager.KomaManager.SetKomaDate(entity, bossManager.BossKomaData1, commandBuffer);
+                    gameManager.KomaManager.SetKomaDate(entity, bossManager.BossKomaData1, gunPortTag, commandBuffer);
 
                     // HPバーを設定
                     gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData1);
@@ -58,7 +58,7 @@ public class BossPhaseSytem : SystemBase
                         if (hpTag._hp < _CHANGE_PHASE_HP)
                         {
                             // 次の駒をセットする
-                            gameManager.KomaManager.SetKomaDate(entity, bossManager.BossKomaData2, commandBuffer);
+                            gameManager.KomaManager.SetKomaDate(entity, bossManager.BossKomaData2, gunPortTag, commandBuffer);
 
                             // HPバーを再設定
                             gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData2);
@@ -73,7 +73,7 @@ public class BossPhaseSytem : SystemBase
                         if (hpTag._hp < _CHANGE_PHASE_HP)
                         {
                             // 次の駒をセットする
-                            gameManager.KomaManager.SetKomaDate(entity, bossManager.BossKomaData3, commandBuffer);
+                            gameManager.KomaManager.SetKomaDate(entity, bossManager.BossKomaData3, gunPortTag, commandBuffer);
 
                             // HPバーを再設定
                             gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData3);

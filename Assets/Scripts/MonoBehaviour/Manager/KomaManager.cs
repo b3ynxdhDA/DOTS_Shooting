@@ -21,7 +21,7 @@ public class KomaManager
     /// <param name="hpTag">対象のHPTagコンポーネント</param>
     /// <param name="gunPortTag">対象のGunPortTagコンポーネント</param>
     /// <param name="komaData">設定するKomaDate</param>
-    public void SetKomaDate(Entity entity, KomaData komaData, EntityCommandBuffer commandBuffer)
+    public void SetKomaDate(Entity entity, KomaData komaData, GunPortTag gunPortTag, EntityCommandBuffer commandBuffer)
     {
         // ボスの基礎ステータスを設定する
         commandBuffer.SetComponent(entity, new HPTag
@@ -29,11 +29,9 @@ public class KomaManager
             _hp = komaData.hp
         });
 
-        commandBuffer.SetComponent(entity, new GunPortTag
-        {
-            _shootCoolTime = komaData.shootCoolTime,
-            _bulletSpeed = komaData.bulletSpeed
-        });
+        // セットコンポーネントだとエンティティプレハブがNullになるので
+        gunPortTag._shootCoolTime = komaData.shootCoolTime;
+        gunPortTag._bulletSpeed = komaData.bulletSpeed;
 
         // マテリアルを変更
         commandBuffer.SetSharedComponent(entity, new RenderMesh
