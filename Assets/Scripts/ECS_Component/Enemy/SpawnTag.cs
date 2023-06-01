@@ -1,7 +1,7 @@
 using Unity.Entities;
 
 /// <summary>
-/// Spawnerのタイミングを伝えるコンポーネントタグ
+/// Spawnのタイミングを伝えるコンポーネントタグ
 /// </summary>
 [GenerateAuthoringComponent]
 public struct SpawnTag : IComponentData { }

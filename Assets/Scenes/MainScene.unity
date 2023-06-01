@@ -1126,7 +1126,7 @@ PrefabInstance:
     - target: {fileID: 8915979016316284305, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
       propertyPath: _playerKomadate
       value: 
-      objectReference: {fileID: 11400000, guid: 107d5ba0a2e6d9244904d161ba9dc299, type: 2}
+      objectReference: {fileID: 11400000, guid: 2bd25494b690c5b4c8d14db91be3b522, type: 2}
     - target: {fileID: 8915979016316284305, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
       propertyPath: _normalEnemyKomadate.Array.data[0]
       value: 
@@ -1378,6 +1378,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1959919505}
   - component: {fileID: 1959919504}
+  - component: {fileID: 1959919508}
+  - component: {fileID: 1959919507}
   - component: {fileID: 1959919506}
   m_Layer: 0
   m_Name: Spawner
@@ -1422,11 +1424,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 1959919503}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ee952e4dd162b344b6b872ee01127ef, type: 3}
+  m_Script: {fileID: 11500000, guid: 40190903295a1854199c2169b25bde5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyBasePrefab: {fileID: 1617539298828681250, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
-  _enemyBulletPrefab: {fileID: 6885799998334693771, guid: 29049b4cdba3d234dbcdade345ddf202, type: 3}
+--- !u!114 &1959919507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959919503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a695ae16bf0a5b438c16cd222ee7eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnPrefabEntity: {fileID: 1617539298828681250, guid: 0b1107d894e2b1b48a2584a87eb534e6, type: 3}
+--- !u!114 &1959919508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959919503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51d20a9ebcd21fe48914e25864a90d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2020075246
 GameObject:
   m_ObjectHideFlags: 0

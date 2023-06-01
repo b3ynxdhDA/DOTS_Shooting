@@ -1,6 +1,5 @@
 using Unity.Entities;
 using Unity.Transforms;
-using Unity.Rendering;
 using Unity.Mathematics;
 
 /// <summary>
@@ -9,18 +8,36 @@ using Unity.Mathematics;
 public class EnemySpawnSytem : SystemBase
 {
     // 変数宣言------------------------------------------------------------------
-
     // 実行タイミングを管理しているシステムグループ
     private EntityCommandBufferSystem _entityCommandBufferSystem;
 
-    // 一回目の処理が終わったかどうか
-    private bool _isNormalEnemyInitialize = false;
+    // 敵の出現時間間隔
+    private float _spawnCoolTime = 0;
 
-    // 全てのエンティティで処理をしたか
-    private bool _isLoopEntity = false;
+    // 敵の出現位置
+    private float _spawnPosX = 0;
 
-    // 最初に処理されるエンティティのインデックス
-    private int _firstIndex = 0;
+    // 敵の出現位置
+    private float _spawnPosY = 0;
+
+    // 定数宣言------------------------------------------------------------------
+    // 敵の出現間隔の最大
+    const float _SPAWN_TIME_MAX = 5;
+
+    // 敵の出現間隔の最小
+    const float _SPAWN_TIME_MIN = 3;
+
+    // 敵の出現位置のXの最大
+    const float _SPAWN_POS_X_MAX = 8.6f;
+
+    // 敵の出現位置のXの最小
+    const float _SPAWN_POS_X_MIN = -8.6f;
+
+    // 敵の出現位置のYの最大
+    const float _SPAWN_POS_Y_MAX = 4.1f;
+
+    // 敵の出現位置のYの最小
+    const float _SPAWN_POS_Y_MIN = -1.1f;
 
     /// <summary>
     /// システム作成時に呼ばれる処理
@@ -29,8 +46,6 @@ public class EnemySpawnSytem : SystemBase
     {
         // EntityCommandBufferの取得
         _entityCommandBufferSystem = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
-
-
     }
 
     /// <summary>
@@ -39,7 +54,7 @@ public class EnemySpawnSytem : SystemBase
     protected override void OnUpdate()
     {
         // コマンドバッファを取得
-        EntityCommandBuffer concurrent = _entityCommandBufferSystem.CreateCommandBuffer();
+        EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
         // 各Managerを取得
         GameManager gameManager = GameManager.instance;
@@ -48,22 +63,45 @@ public class EnemySpawnSytem : SystemBase
         // 駒データを配列から使用する駒をランダムに決める
         KomaData nowKomaData = normalEnemyManager.NormalEnemyKomaData[UnityEngine.Random.Range(0, normalEnemyManager.NormalEnemyKomaData.Length)];
 
+        if(_spawnCoolTime < 0)
+        {
+            _spawnPosX = UnityEngine.Random.Range(_SPAWN_POS_X_MIN, _SPAWN_POS_X_MAX);
+            _spawnPosY = UnityEngine.Random.Range(_SPAWN_POS_Y_MIN, _SPAWN_POS_Y_MAX);
         Entities
             .WithName("EnemySpawn")
-            .WithAll<Spawner, SpawnTag>()
-            .WithoutBurst()
+            .WithAll<Spawner>()
+            .WithBurst()
             .ForEach((Entity entity, in SpawnerData spawnerData) =>
             {
                 // エンティティを生成
-                Entity createEntity = concurrent.Instantiate(spawnerData.SpawnPrefabEntity);
+                Entity newEntity = commandBuffer.Instantiate(spawnerData.SpawnPrefabEntity);
 
-                // GunPortTagコンポーネントを取得
-                GunPortTag gunPortTag = GetComponent<GunPortTag>(createEntity);
+                commandBuffer.SetComponent(newEntity, new Translation
+                {
+                    Value = new float3(_spawnPosX, _spawnPosY, 0f)// @ここがWithoutBurst()とRun()が必要
+                });
+                // 敵をスポーンさせるコンポーネントタグを削除
+                //commandBuffer.RemoveComponent<SpawnTag>(entity);
 
+            }).Schedule();
+
+            _spawnCoolTime = UnityEngine.Random.Range(_SPAWN_TIME_MIN, _SPAWN_TIME_MAX);
+        }
+
+        _spawnCoolTime -= Time.DeltaTime;
+
+        Entities
+            .WithName("EnemyInitialization")
+            .WithAll<EnemyTag, PlaneEnemyTag>()
+            .WithNone<BossEnemyTag>()
+            .WithoutBurst()
+            .ForEach((Entity entity, ref GunPortTag gunPortTag) =>
+            {
                 // 雑魚敵の駒データを設定する
-                gameManager.KomaManager.SetKomaDate(createEntity, nowKomaData, gunPortTag, concurrent);
+                gameManager.KomaManager.SetKomaDate(entity, nowKomaData, gunPortTag, commandBuffer);
 
-                concurrent.RemoveComponent<SpawnTag>(entity);
+                // 初期化していない敵についているコンポーネントタグを削除
+                commandBuffer.RemoveComponent<PlaneEnemyTag>(entity);
 
             }).Run();
 

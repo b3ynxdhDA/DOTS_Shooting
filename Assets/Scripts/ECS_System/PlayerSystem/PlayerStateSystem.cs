@@ -34,7 +34,7 @@ public class PlayerStateSystem : SystemBase
             .WithName("Player_State")
             .WithAll<PlayerTag>()
             .WithoutBurst()
-            .ForEach((Entity entity, ref HPTag hpTag, ref GunPortTag gunPortTag) =>
+            .ForEach((Entity entity, ref GunPortTag gunPortTag, in HPTag hpTag) =>
             {
                 // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
                 if (!playerManager.IsPlayerInitialize)
