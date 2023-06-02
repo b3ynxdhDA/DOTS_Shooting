@@ -48,11 +48,12 @@ MonoBehaviour:
   _configCanvas: {fileID: 1200619586308441919, guid: 7765cb6ae060398479ed7af0b18b8f05, type: 3}
   Quad: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
   _nowScore: 0
-  _playerKomadate: {fileID: 11400000, guid: fd5b0e7a656eb204f8a7a44651219437, type: 2}
+  _playerKomadate: {fileID: 11400000, guid: 9738ee5cb4945d148beb3ba7eb7a66df, type: 2}
   _normalEnemyKomadate:
   - {fileID: 11400000, guid: fd5b0e7a656eb204f8a7a44651219437, type: 2}
   - {fileID: 11400000, guid: 68b1b39a6a388c14885f17fde9f57e02, type: 2}
   - {fileID: 11400000, guid: 95c575e2bba918548adf30f78951e872, type: 2}
+  - {fileID: 11400000, guid: 9e47073bc55b5f0469d3d54e8c42f8c8, type: 2}
   _bossKomaDate1: {fileID: 11400000, guid: 2bd25494b690c5b4c8d14db91be3b522, type: 2}
   _bossKomaDate2: {fileID: 11400000, guid: de559b9483941154980817a1934552f4, type: 2}
   _bossKomaDate3: {fileID: 11400000, guid: 9738ee5cb4945d148beb3ba7eb7a66df, type: 2}

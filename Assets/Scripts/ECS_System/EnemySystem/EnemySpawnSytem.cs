@@ -14,12 +14,6 @@ public class EnemySpawnSytem : SystemBase
     // 敵の出現時間間隔
     private float _spawnCoolTime = 0;
 
-    // 敵の出現位置
-    private float _spawnPosX = 0;
-
-    // 敵の出現位置
-    private float _spawnPosY = 0;
-
     // 定数宣言------------------------------------------------------------------
     // 敵の出現間隔の最大
     const float _SPAWN_TIME_MAX = 5;
@@ -53,6 +47,12 @@ public class EnemySpawnSytem : SystemBase
     /// </summary>
     protected override void OnUpdate()
     {
+        // ゲームのステートがゲーム中以外なら処理しない
+        if (GameManager.instance.gameState != GameManager.GameState.GameNow)
+        {
+            return;
+        }
+
         // コマンドバッファを取得
         EntityCommandBuffer commandBuffer = _entityCommandBufferSystem.CreateCommandBuffer();
 
@@ -60,30 +60,25 @@ public class EnemySpawnSytem : SystemBase
         GameManager gameManager = GameManager.instance;
         NormalEnemyManager normalEnemyManager = gameManager.NormalEnemyManager;
 
-        // 駒データを配列から使用する駒をランダムに決める
-        KomaData nowKomaData = normalEnemyManager.NormalEnemyKomaData[UnityEngine.Random.Range(0, normalEnemyManager.NormalEnemyKomaData.Length)];
-
-        if(_spawnCoolTime < 0)
+        if (_spawnCoolTime < 0)
         {
-            _spawnPosX = UnityEngine.Random.Range(_SPAWN_POS_X_MIN, _SPAWN_POS_X_MAX);
-            _spawnPosY = UnityEngine.Random.Range(_SPAWN_POS_Y_MIN, _SPAWN_POS_Y_MAX);
-        Entities
-            .WithName("EnemySpawn")
-            .WithAll<Spawner>()
-            .WithBurst()
-            .ForEach((Entity entity, in SpawnerData spawnerData) =>
-            {
+            float spawnPosX = UnityEngine.Random.Range(_SPAWN_POS_X_MIN, _SPAWN_POS_X_MAX);
+            float spawnPosY = UnityEngine.Random.Range(_SPAWN_POS_Y_MIN, _SPAWN_POS_Y_MAX);
+            Entities
+                .WithName("EnemySpawn")
+                .WithAll<Spawner>()
+                .WithBurst()
+                .ForEach((Entity entity, in SpawnerData spawnerData) =>
+                {
                 // エンティティを生成
                 Entity newEntity = commandBuffer.Instantiate(spawnerData.SpawnPrefabEntity);
 
-                commandBuffer.SetComponent(newEntity, new Translation
-                {
-                    Value = new float3(_spawnPosX, _spawnPosY, 0f)// @ここがWithoutBurst()とRun()が必要
+                    commandBuffer.SetComponent(newEntity, new Translation
+                    {
+                        Value = new float3(spawnPosX, spawnPosY, 0f)// @ここがWithoutBurst()とRun()が必要
                 });
-                // 敵をスポーンさせるコンポーネントタグを削除
-                //commandBuffer.RemoveComponent<SpawnTag>(entity);
 
-            }).Schedule();
+                }).Schedule();
 
             _spawnCoolTime = UnityEngine.Random.Range(_SPAWN_TIME_MIN, _SPAWN_TIME_MAX);
         }
@@ -97,8 +92,12 @@ public class EnemySpawnSytem : SystemBase
             .WithoutBurst()
             .ForEach((Entity entity, ref GunPortTag gunPortTag) =>
             {
+
+                // 駒データを配列から使用する駒をランダムに決める
+                KomaData nowKomaData = normalEnemyManager.NormalEnemyKomaData[UnityEngine.Random.Range(0, normalEnemyManager.NormalEnemyKomaData.Length)];
+
                 // 雑魚敵の駒データを設定する
-                gameManager.KomaManager.SetKomaDate(entity, nowKomaData, gunPortTag, commandBuffer);
+                gameManager.KomaManager.SetKomaDate(entity, nowKomaData, ref gunPortTag, commandBuffer);
 
                 // 初期化していない敵についているコンポーネントタグを削除
                 commandBuffer.RemoveComponent<PlaneEnemyTag>(entity);

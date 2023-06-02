@@ -51,8 +51,8 @@ public class PlayerMovementSystem : SystemBase
 
         Entities
             .WithName("Player_Input")
-            .WithoutBurst()
             .WithAll<PlayerTag>()
+            .WithoutBurst()
             .ForEach((ref Translation translation, in PlayerMoveDate playerMoveDate) =>
             {
                 // ƒvƒŒƒCƒ„[‚ÌˆÚ“®

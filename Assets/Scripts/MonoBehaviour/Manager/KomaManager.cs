@@ -21,7 +21,7 @@ public class KomaManager
     /// <param name="hpTag">対象のHPTagコンポーネント</param>
     /// <param name="gunPortTag">対象のGunPortTagコンポーネント</param>
     /// <param name="komaData">設定するKomaDate</param>
-    public void SetKomaDate(Entity entity, KomaData komaData, GunPortTag gunPortTag, EntityCommandBuffer commandBuffer)
+    public void SetKomaDate(Entity entity, in KomaData komaData, ref GunPortTag gunPortTag, EntityCommandBuffer commandBuffer)
     {
         // ボスの基礎ステータスを設定する
         commandBuffer.SetComponent(entity, new HPTag

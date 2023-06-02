@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: koma02_b_narikyou
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 8f7b0a835e9f15049a15c7864878ca63, type: 2}
-  hp: 50
+  hp: 20
   shootKind: 0
   shootLine: 1
-  bulletSpeed: 20
-  shootCoolTime: 0.05
+  bulletSpeed: 25
+  shootCoolTime: 0.1

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Koma01_b_tokin
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: c0e080cf1ed0cc5448a1fac2c0927fc3, type: 2}
-  hp: 50
+  hp: 15
   shootKind: 0
   shootLine: 2
   bulletSpeed: 8
-  shootCoolTime: 0.1
+  shootCoolTime: 0.25

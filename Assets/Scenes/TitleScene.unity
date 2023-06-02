@@ -1285,7 +1285,15 @@ PrefabInstance:
     - target: {fileID: 8915979016316284305, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
       propertyPath: _playerKomadate
       value: 
-      objectReference: {fileID: 11400000, guid: 68b1b39a6a388c14885f17fde9f57e02, type: 2}
+      objectReference: {fileID: 11400000, guid: 107d5ba0a2e6d9244904d161ba9dc299, type: 2}
+    - target: {fileID: 8915979016316284305, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
+      propertyPath: _normalEnemyKomadate.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8915979016316284305, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
+      propertyPath: _normalEnemyKomadate.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9e47073bc55b5f0469d3d54e8c42f8c8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
 --- !u!1 &2107160614

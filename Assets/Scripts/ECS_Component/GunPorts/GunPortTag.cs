@@ -1,7 +1,6 @@
 using Unity.Entities;
-#if UNITY_EDITOR
 using UnityEngine;
-#endif
+
 
 /// <summary>
 /// 弾の発射地点のコンポーネントタグ
