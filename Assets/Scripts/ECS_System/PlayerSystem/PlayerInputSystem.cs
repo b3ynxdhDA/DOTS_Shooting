@@ -21,6 +21,10 @@ public class PlayerInputSystem : SystemBase
         float inputVertical = Input.GetAxis("Vertical");
         // 水平方向の入力
         float inputHorizontal = Input.GetAxis("Horizontal");
+        // 低速モードの入力
+        bool inputSlowButtonDown = Input.GetButtonDown("Slow");
+        // 低速モードの入力
+        bool inputSlowButtonUp = Input.GetButtonUp("Slow");
 
         Entities
             .WithName("Player_Input")
@@ -30,6 +34,15 @@ public class PlayerInputSystem : SystemBase
                 // プレイヤーの移動
                 playerMove._moveDirection.x = inputHorizontal;
                 playerMove._moveDirection.y = inputVertical;
+
+                if (inputSlowButtonDown || inputSlowButtonUp)
+                {
+                    float tmp = playerMove._moveSpeed;
+
+                    playerMove._moveSpeed = playerMove._slowSpeed;
+
+                    playerMove._slowSpeed = tmp;
+                }
 
             }).Run();// メインスレッドで処理
     }

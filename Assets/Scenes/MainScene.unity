@@ -642,6 +642,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 10
+  _slowSpeed: 5
   _moveDirection:
     x: 0
     y: 0
@@ -1561,6 +1562,10 @@ PrefabInstance:
       propertyPath: _bossHpSlider
       value: 
       objectReference: {fileID: 1765523831318984689}
+    - target: {fileID: 8498389331388482656, guid: d6e89511c34da8a49b3bdb5b407e5bb1, type: 3}
+      propertyPath: m_Name
+      value: BossHpSlider
+      objectReference: {fileID: 0}
     - target: {fileID: 9084595968933388545, guid: d6e89511c34da8a49b3bdb5b407e5bb1, type: 3}
       propertyPath: m_Name
       value: GameCanvas
