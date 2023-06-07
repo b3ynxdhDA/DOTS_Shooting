@@ -64,21 +64,24 @@ public class EnemySpawnSytem : SystemBase
         {
             float spawnPosX = UnityEngine.Random.Range(_SPAWN_POS_X_MIN, _SPAWN_POS_X_MAX);
             float spawnPosY = UnityEngine.Random.Range(_SPAWN_POS_Y_MIN, _SPAWN_POS_Y_MAX);
+
             Entities
                 .WithName("EnemySpawn")
                 .WithAll<Spawner>()
                 .WithBurst()
                 .ForEach((Entity entity, in SpawnerData spawnerData) =>
                 {
-                // エンティティを生成
-                Entity newEntity = commandBuffer.Instantiate(spawnerData.SpawnPrefabEntity);
+                    // エンティティを生成
+                    Entity newEntity = commandBuffer.Instantiate(spawnerData.SpawnPrefabEntity);
 
                     commandBuffer.SetComponent(newEntity, new Translation
                     {
-                        Value = new float3(spawnPosX, spawnPosY, 0f)// @ここがWithoutBurst()とRun()が必要
-                });
+                        Value = new float3(spawnPosX, spawnPosY, 0f)
+                    });
 
                 }).Schedule();
+
+            gameManager.SEManager.OnEnemySpawn_SE();
 
             _spawnCoolTime = UnityEngine.Random.Range(_SPAWN_TIME_MIN, _SPAWN_TIME_MAX);
         }

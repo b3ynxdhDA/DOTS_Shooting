@@ -7,5 +7,5 @@ using Unity.Entities;
 public struct SpinGunPortTag : IComponentData
 {
     // ‰ñ“]‚·‚é‘¬“x
-    public float _spinSpeed;
+    public int _spinSpeed;
 }

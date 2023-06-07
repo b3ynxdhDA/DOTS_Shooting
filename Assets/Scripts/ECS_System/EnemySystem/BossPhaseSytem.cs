@@ -8,7 +8,7 @@ public class BossPhaseSytem : SystemBase
 
     // 定数宣言------------------------------------------------------------------
     // ボスの段階が変化するHP
-    private const int _CHANGE_PHASE_HP = 1;
+    private const int _CHANGE_PHASE_HP = 2;
 
     /// <summary>
     /// システム作成時に呼ばれる処理
@@ -44,7 +44,7 @@ public class BossPhaseSytem : SystemBase
                     gameManager.KomaManager.SetKomaDate(entity, bossManager.BossKomaData1, ref gunPortTag, commandBuffer);
 
                     // HPバーを設定
-                    gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData1);
+                    gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData1.hp);
 
                     bossManager.IsBossInitialize = true;
                 }
@@ -61,7 +61,7 @@ public class BossPhaseSytem : SystemBase
                             gameManager.KomaManager.SetKomaDate(entity, bossManager.BossKomaData2, ref gunPortTag, commandBuffer);
 
                             // HPバーを再設定
-                            gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData2);
+                            gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData2.hp);
 
                             // ボスの攻撃段階を上げる
                             bossManager.UpdateBossCount();
@@ -76,7 +76,7 @@ public class BossPhaseSytem : SystemBase
                             gameManager.KomaManager.SetKomaDate(entity, bossManager.BossKomaData3, ref gunPortTag, commandBuffer);
 
                             // HPバーを再設定
-                            gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData3);
+                            gameManager.UIManager.SetSliderBossHP(bossManager.BossKomaData3.hp);
 
                             // ボスの攻撃段階を上げる
                             bossManager.UpdateBossCount();

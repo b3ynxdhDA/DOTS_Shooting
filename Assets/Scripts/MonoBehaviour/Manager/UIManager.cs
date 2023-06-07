@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     
     // ボスの体力バー
     [SerializeField] private Slider _bossHpSlider = default;
+    
+    // プレイヤーの体力バー
+    [SerializeField] private Slider _playerHpSlider = default;
 
     // ゲームオーバーテキスト
     [SerializeField] private GameObject _gameFinishText = default;
@@ -73,15 +76,31 @@ public class UIManager : MonoBehaviour
             //_timerCount -= Time.deltaTime;
             //_timerCountText.text = "" + ((int)_timerCount / _ONE_MINUTES).ToString("00") + " : " + ((int)_timerCount % _ONE_MINUTES).ToString("00");
 
+            // プレイヤーのHPをスライダーに反映する
+            _playerHpSlider.value = GameManager.instance.PlayerManager.GetPlayerHP;
+
             // ボスのHPをスライダーに反映する
             _bossHpSlider.value = GameManager.instance.BossManager.GetBossHP;
 
         }
     }
 
-    public void SetSliderBossHP(KomaData komaData)
+    /// <summary>
+    /// プレイヤーのHPバーの最大値にプレイヤーの最大HPをセットする
+    /// </summary>
+    /// <param name="setHP"></param>
+    public void SetSliderPlayerHP(float setHP)
     {
-        _bossHpSlider.maxValue = komaData.hp;
+        _playerHpSlider.maxValue = setHP;
+    }
+
+    /// <summary>
+    /// ボスのHPバーの最大値にボスの最大HPをセットする
+    /// </summary>
+    /// <param name="setHP"></param>
+    public void SetSliderBossHP(float setHP)
+    {
+        _bossHpSlider.maxValue = setHP;
     }
 
     /// <summary>

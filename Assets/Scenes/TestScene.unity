@@ -427,7 +427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52a53249308fabd41bfa003950e8c888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerHp: 50
 --- !u!114 &747365180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002c7bfffff74014cbbbe9c5f0390c45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _straightBulletEntity: {fileID: 6885799998334693771, guid: 8b6b7aa85cf95a44e86cc5a1e86f666e, type: 3}
+  _BulletEntity: {fileID: 0}
   _shootCoolTime: 0.1
   _shootInterval: 0.2
   _bulletSpeed: 20
@@ -742,6 +741,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
+  _slowSpeed: 0
   _moveDirection:
     x: 0
     y: 0
@@ -813,6 +813,10 @@ PrefabInstance:
     - target: {fileID: 5677681601453861856, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5677681601453861856, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6184526737222521596, guid: 00ed9650c4287214fb5106dd7b9542ca, type: 3}
       propertyPath: m_RootOrder

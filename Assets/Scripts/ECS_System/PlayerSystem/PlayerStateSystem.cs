@@ -39,7 +39,12 @@ public class PlayerStateSystem : SystemBase
                 // フィールドやOnCreateではManagerが取得できなかったのでOnUpdateで初期化
                 if (!playerManager.IsPlayerInitialize)
                 {
+                    // プレイヤーの駒データをセット
                     gameManager.KomaManager.SetKomaDate(entity, playerManager.PlayerKomaData, ref gunPortTag, commandBuffer);
+
+                    // HPバーを再設定
+                    gameManager.UIManager.SetSliderPlayerHP(playerManager.PlayerKomaData.hp);
+
                     playerManager.IsPlayerInitialize = true;
                 }
 
@@ -49,6 +54,9 @@ public class PlayerStateSystem : SystemBase
                     commandBuffer.DestroyEntity(entity);
                     gameManager.UIManager.CallGameFinish(false);
                 }
+
+                // 参照できるようにBossManagerにHPを渡す
+                playerManager.GetPlayerHP = hpTag._hp;
 
             }).Run();// メインスレッド処理
 
